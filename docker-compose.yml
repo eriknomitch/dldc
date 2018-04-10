@@ -1,0 +1,70 @@
+# ================================================
+# DOCKERFILE =====================================
+# ================================================
+
+# ------------------------------------------------
+# VERSION ----------------------------------------
+# ------------------------------------------------
+version: '3'
+
+# ------------------------------------------------
+# SERVICES ---------------------------------------
+# ------------------------------------------------
+services:
+
+  # ----------------------------------------------
+  # NGINX-PROXY ----------------------------------
+  # ----------------------------------------------
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./docker/nginx-proxy/vhost.d:/etc/nginx/vhost.d:ro
+    logging:
+      driver: "none"
+
+  # ----------------------------------------------
+  # JUPYTER --------------------------------------
+  # ----------------------------------------------
+  jupyter:
+    image: deep-learning
+    volumes:
+      - ./shared:/shared
+      - ${HOME}/.datasets:/datasets
+      - .:/hc-ai
+    environment:
+      - VIRTUAL_PORT=8888
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+
+    ports:
+      - "8888:8888"
+    command: bash /root/run_jupyter.sh --ip=* --port=8888 --no-browser --notebook-dir=/opt/app/data --allow-root
+
+  # ----------------------------------------------
+  # TENSORBOARD ----------------------------------
+  # ----------------------------------------------
+  # tensorboard:
+  #   image: deep-learning
+  #   volumes:
+  #     - ./shared:/shared
+  #     - ${HOME}/.datasets:/datasets
+  #   environment:
+  #     - VIRTUAL_HOST=tensorboard.${VIRTUAL_HOST}
+  #     - VIRTUAL_PORT=6006
+  #   ports:
+  #     - "6006:6006"
+
+  #   #command: /usr/local/bin/tensorboard --logdir=/shared --reload_interval=1
+  #   command: echo "Service disabled tensorboard"
+
+# ------------------------------------------------
+# VOLUMES ----------------------------------------
+# ------------------------------------------------
+volumes:
+  shared:
+    external: true
