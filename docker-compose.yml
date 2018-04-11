@@ -39,7 +39,7 @@ services:
     environment:
       - VIRTUAL_PORT=8888
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
-      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
 
     ports:
       - "8888:8888"
@@ -54,7 +54,7 @@ services:
   #     - ./shared:/shared
   #     - ${HOME}/.datasets:/datasets
   #   environment:
-  #     - VIRTUAL_HOST=tensorboard.${VIRTUAL_HOST}
+  #     - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
   #     - VIRTUAL_PORT=6006
   #   ports:
   #     - "6006:6006"
