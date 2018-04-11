@@ -9,6 +9,8 @@ if [ -z $EXTERNAL_HOST ] ; then
   exit 1
 fi
 
+./build
+
 echo "Using host: $EXTERNAL_HOST"
 
 # ------------------------------------------------
