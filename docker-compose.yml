@@ -47,19 +47,19 @@ services:
   # ----------------------------------------------
   # TENSORBOARD ----------------------------------
   # ----------------------------------------------
-  # tensorboard:
-  #   image: deep-learning
-  #   volumes:
-  #     - ./shared:/shared
-  #     - ${HOME}/.datasets:/datasets
-  #   environment:
-  #     - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
-  #     - VIRTUAL_PORT=6006
-  #   ports:
-  #     - "6006:6006"
+  tensorboard:
+    image: deep-learning
+    volumes:
+      - ./shared:/shared
+      - ./notebooks:/notebooks
+      - .:/deep-learning
+    environment:
+      - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
+      - VIRTUAL_PORT=6006
+    ports:
+      - "6006:6006"
 
-  #   #command: /usr/local/bin/tensorboard --logdir=/shared --reload_interval=1
-  #   command: echo "Service disabled tensorboard"
+    command: /usr/local/bin/tensorboard --logdir=/shared --reload_interval=1
 
 # ------------------------------------------------
 # VOLUMES ----------------------------------------
@@ -67,3 +67,4 @@ services:
 volumes:
   shared:
     external: true
+
