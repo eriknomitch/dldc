@@ -25,10 +25,10 @@
 #c.JupyterApp.answer_yes = False
 
 ## Full path of a config file.
-#c.JupyterApp.config_file = ''
+#c.JupyterApp.config_file = u''
 
 ## Specify a config file to load.
-#c.JupyterApp.config_file_name = ''
+#c.JupyterApp.config_file_name = u''
 
 ## Generate default config file.
 #c.JupyterApp.generate_config = False
@@ -58,15 +58,6 @@ c.NotebookApp.allow_origin = '*'
 #  Ignored if allow_origin is set.
 #c.NotebookApp.allow_origin_pat = ''
 
-## Allow password to be changed at login for the notebook server.
-#
-#  While loggin in with a token, the notebook server UI will give the opportunity
-#  to the user to enter a new password at the same time that will replace the
-#  token login mechanism.
-#
-#  This can be set to false to prevent changing password from the UI/API.
-#c.NotebookApp.allow_password_change = True
-
 ## Whether to allow the user to run the notebook as root.
 c.NotebookApp.allow_root = True
 
@@ -82,14 +73,14 @@ c.NotebookApp.allow_root = True
 #  If not specified, the default browser will be determined by the `webbrowser`
 #  standard library module, which allows setting of the BROWSER environment
 #  variable to override it.
-#c.NotebookApp.browser = ''
+#c.NotebookApp.browser = u''
 
 ## The full path to an SSL/TLS certificate file.
-#c.NotebookApp.certfile = ''
+#c.NotebookApp.certfile = u''
 
 ## The full path to a certificate authority certificate for SSL/TLS client
 #  authentication.
-#c.NotebookApp.client_ca = ''
+#c.NotebookApp.client_ca = u''
 
 ## The config manager class to use
 #c.NotebookApp.config_manager_class = 'notebook.services.config.manager.ConfigManager'
@@ -107,10 +98,10 @@ c.NotebookApp.allow_root = True
 #
 #  Note: Cookie secrets should be kept private, do not share config files with
 #  cookie_secret stored in plaintext (you can read the value from a file).
-#c.NotebookApp.cookie_secret = b''
+#c.NotebookApp.cookie_secret = ''
 
 ## The file where the cookie secret is stored.
-#c.NotebookApp.cookie_secret_file = ''
+#c.NotebookApp.cookie_secret_file = u''
 
 ## The default URL to redirect to from `/`
 #c.NotebookApp.default_url = '/tree'
@@ -141,9 +132,6 @@ c.NotebookApp.allow_root = True
 ## extra paths to look for Javascript notebook extensions
 #c.NotebookApp.extra_nbextensions_path = []
 
-## handlers that should be loaded at higher priority than the default services
-#c.NotebookApp.extra_services = []
-
 ## Extra paths to search for serving static files.
 #
 #  This allows adding javascript/css to be available from the notebook server
@@ -162,8 +150,8 @@ c.NotebookApp.allow_root = True
 #  recompilation
 #c.NotebookApp.ignore_minified_js = False
 
-## (bytes/sec) Maximum rate at which stream output can be sent on iopub before
-#  they are limited.
+## (bytes/sec) Maximum rate at which messages can be sent on iopub before they
+#  are limited.
 #c.NotebookApp.iopub_data_rate_limit = 1000000
 
 ## (msgs/sec) Maximum rate at which messages can be sent on iopub before they are
@@ -171,6 +159,7 @@ c.NotebookApp.allow_root = True
 #c.NotebookApp.iopub_msg_rate_limit = 1000
 
 ## The IP address the notebook server will listen on.
+#c.NotebookApp.ip = 'localhost'
 c.NotebookApp.ip = '*'
 
 ## Supply extra arguments that will be passed to Jinja environment.
@@ -190,7 +179,7 @@ c.NotebookApp.ip = '*'
 #c.NotebookApp.kernel_spec_manager_class = 'jupyter_client.kernelspec.KernelSpecManager'
 
 ## The full path to a private key file for usage with SSL/TLS.
-#c.NotebookApp.keyfile = ''
+#c.NotebookApp.keyfile = u''
 
 ## The login handler class to use.
 #c.NotebookApp.login_handler_class = 'notebook.auth.login.LoginHandler'
@@ -211,7 +200,7 @@ c.NotebookApp.ip = '*'
 #c.NotebookApp.nbserver_extensions = {}
 
 ## The directory to use for notebooks and kernels.
-#c.NotebookApp.notebook_dir = ''
+#c.NotebookApp.notebook_dir = u''
 
 ## Whether to open in a browser after starting. The specific browser used is
 #  platform dependent and determined by the python standard library `webbrowser`
@@ -226,11 +215,11 @@ c.NotebookApp.open_browser = False
 #    from notebook.auth import passwd; passwd()
 #
 #  The string should be of the form type:salt:hashed-password.
-#c.NotebookApp.password = ''
+#c.NotebookApp.password = u''
 
 ## Forces users to use a password for the Notebook server. This is useful in a
 #  multi user environment, for instance when everybody in the LAN can access each
-#  other's machine through ssh.
+#  other's machine though ssh.
 #
 #  In such a case, server the notebook server on localhost is not secure since
 #  any user can connect to the notebook server via ssh.
@@ -256,13 +245,6 @@ c.NotebookApp.port = 8888
 
 ## The session manager class to use.
 #c.NotebookApp.session_manager_class = 'notebook.services.sessions.sessionmanager.SessionManager'
-
-## Shut down the server after N seconds with no kernels or terminals running and
-#  no activity. This can be used together with culling idle kernels
-#  (MappingKernelManager.cull_idle_timeout) to shutdown the notebook server when
-#  it's not in use. This is not precisely timed: it may shut down up to a minute
-#  later. 0 (the default) disables this automatic shutdown.
-#c.NotebookApp.shutdown_no_activity_timeout = 0
 
 ## Supply SSL options for the tornado HTTPServer. See the tornado docs for
 #  details.
@@ -291,62 +273,11 @@ c.NotebookApp.trust_xheaders = True
 ## DEPRECATED, use tornado_settings
 #c.NotebookApp.webapp_settings = {}
 
-## Specify Where to open the notebook on startup. This is the
-#  `new` argument passed to the standard library method `webbrowser.open`.
-#  The behaviour is not guaranteed, but depends on browser support. Valid
-#  values are:
-#      2 opens a new tab,
-#      1 opens a new window,
-#      0 opens in an existing window.
-#  See the `webbrowser.open` documentation for details.
-#c.NotebookApp.webbrowser_open_new = 2
-
-## Set the tornado compression options for websocket connections.
-#
-#  This value will be returned from
-#  :meth:`WebSocketHandler.get_compression_options`. None (default) will disable
-#  compression. A dict (even an empty one) will enable compression.
-#
-#  See the tornado docs for WebSocketHandler.get_compression_options for details.
-#c.NotebookApp.websocket_compression_options = None
-
 ## The base URL for websockets, if it differs from the HTTP server (hint: it
 #  almost certainly doesn't).
 #
 #  Should be in the form of an HTTP origin: ws[s]://hostname[:port]
 #c.NotebookApp.websocket_url = ''
-
-#------------------------------------------------------------------------------
-# LabApp(NotebookApp) configuration
-#------------------------------------------------------------------------------
-
-## The app directory to launch JupyterLab from.
-#c.LabApp.app_dir = '/usr/local/share/jupyter/lab'
-
-## Whether to start the app in core mode. In this mode, JupyterLab will run using
-#  the JavaScript assets that are within the installed JupyterLab Python package.
-#  In core mode, third party extensions are disabled. The `--dev-mode` flag is an
-#  alias to this to be used when the Python package itself is installed in
-#  development mode (`pip install -e .`).
-#c.LabApp.core_mode = False
-
-## The default URL to redirect to from `/`
-#c.LabApp.default_url = '/lab'
-
-## Whether to start the app in dev mode. Uses the unpublished local JavaScript
-#  packages in the `dev_mode` folder.  In this case JupyterLab will show a red
-#  stripe at the top of the page.  It can only be used if JupyterLab is installed
-#  as `pip install -e .`.
-#c.LabApp.dev_mode = False
-
-## The directory for user settings.
-#c.LabApp.user_settings_dir = '/root/.jupyter/lab/user-settings'
-
-## Whether to serve the app in watch mode
-#c.LabApp.watch = False
-
-## The directory for workspaces
-#c.LabApp.workspaces_dir = '/root/.jupyter/lab/workspaces'
 
 #------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
@@ -373,7 +304,7 @@ c.NotebookApp.trust_xheaders = True
 ## Set the kernel's IP address [default localhost]. If the IP address is
 #  something other than localhost, then Consoles on other machines will be able
 #  to connect to the Kernel, so be careful!
-#c.ConnectionFileMixin.ip = ''
+#c.ConnectionFileMixin.ip = u''
 
 ## set the shell (ROUTER) port [default: random]
 #c.ConnectionFileMixin.shell_port = 0
@@ -474,7 +405,7 @@ c.NotebookApp.trust_xheaders = True
 #c.Session.item_threshold = 64
 
 ## execution key, for signing messages.
-#c.Session.key = b''
+#c.Session.key = ''
 
 ## path to file containing execution key.
 #c.Session.keyfile = ''
@@ -488,7 +419,7 @@ c.NotebookApp.trust_xheaders = True
 #c.Session.packer = 'json'
 
 ## The UUID identifying this session.
-#c.Session.session = ''
+#c.Session.session = u''
 
 ## The digest scheme used to construct the message signatures. Must have the form
 #  'hmac-HASH'.
@@ -499,7 +430,7 @@ c.NotebookApp.trust_xheaders = True
 #c.Session.unpacker = 'json'
 
 ## Username for the Session. Default is your system username.
-#c.Session.username = 'username'
+#c.Session.username = u'username'
 
 #------------------------------------------------------------------------------
 # MultiKernelManager(LoggingConfigurable) configuration
@@ -508,7 +439,7 @@ c.NotebookApp.trust_xheaders = True
 ## A class for managing multiple kernels.
 
 ## The name of the default kernel to start
-#c.MultiKernelManager.default_kernel_name = 'python3'
+#c.MultiKernelManager.default_kernel_name = 'python2'
 
 ## The kernel manager class.  This is configurable to allow subclassing of the
 #  KernelManager for customized behavior.
@@ -520,35 +451,8 @@ c.NotebookApp.trust_xheaders = True
 
 ## A KernelManager that handles notebook mapping and HTTP error handling
 
-## Whether messages from kernels whose frontends have disconnected should be
-#  buffered in-memory.
-#
-#  When True (default), messages are buffered and replayed on reconnect, avoiding
-#  lost messages due to interrupted connectivity.
-#
-#  Disable if long-running kernels will produce too much output while no
-#  frontends are connected.
-#c.MappingKernelManager.buffer_offline_messages = True
-
-## Whether to consider culling kernels which are busy. Only effective if
-#  cull_idle_timeout > 0.
-#c.MappingKernelManager.cull_busy = False
-
-## Whether to consider culling kernels which have one or more connections. Only
-#  effective if cull_idle_timeout > 0.
-#c.MappingKernelManager.cull_connected = False
-
-## Timeout (in seconds) after which a kernel is considered idle and ready to be
-#  culled. Values of 0 or lower disable culling. Very short timeouts may result
-#  in kernels being culled for users with poor network connections.
-#c.MappingKernelManager.cull_idle_timeout = 0
-
-## The interval (in seconds) on which to check for idle kernels exceeding the
-#  cull timeout value.
-#c.MappingKernelManager.cull_interval = 300
-
 ##
-#c.MappingKernelManager.root_dir = ''
+#c.MappingKernelManager.root_dir = u''
 
 #------------------------------------------------------------------------------
 # ContentsManager(LoggingConfigurable) configuration
@@ -568,9 +472,6 @@ c.NotebookApp.trust_xheaders = True
 #  - if unspecified, path defaults to '',
 #    indicating the root path.
 
-## Allow access to hidden files
-#c.ContentsManager.allow_hidden = False
-
 ##
 #c.ContentsManager.checkpoints = None
 
@@ -580,25 +481,8 @@ c.NotebookApp.trust_xheaders = True
 ##
 #c.ContentsManager.checkpoints_kwargs = {}
 
-## handler class to use when serving raw file requests.
-#
-#  Default is a fallback that talks to the ContentsManager API, which may be
-#  inefficient, especially for large files.
-#
-#  Local files-based ContentsManagers can use a StaticFileHandler subclass, which
-#  will be much more efficient.
-#
-#  Access to these files should be Authenticated.
-#c.ContentsManager.files_handler_class = 'notebook.files.handlers.FilesHandler'
-
-## Extra parameters to pass to files_handler_class.
-#
-#  For example, StaticFileHandlers generally expect a `path` argument specifying
-#  the root directory from which to serve files.
-#c.ContentsManager.files_handler_params = {}
-
 ## Glob patterns to hide in file and directory listings.
-#c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
+#c.ContentsManager.hide_globs = [u'__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
 
 ## Python callable or importstring thereof
 #
@@ -659,11 +543,6 @@ c.NotebookApp.trust_xheaders = True
 # FileContentsManager(FileManagerMixin,ContentsManager) configuration
 #------------------------------------------------------------------------------
 
-## If True (default), deleting files will send them to the platform's
-#  trash/recycle bin, where they can be recovered. If False, deleting files
-#  really deletes them.
-#c.FileContentsManager.delete_to_trash = True
-
 ## Python callable or importstring thereof
 #
 #  to be called on the path of a file just saved.
@@ -680,7 +559,7 @@ c.NotebookApp.trust_xheaders = True
 #c.FileContentsManager.post_save_hook = None
 
 ##
-#c.FileContentsManager.root_dir = ''
+#c.FileContentsManager.root_dir = u''
 
 ## DEPRECATED, use post_save_hook. Will be removed in Notebook 5.0
 #c.FileContentsManager.save_script = False
@@ -697,13 +576,13 @@ c.NotebookApp.trust_xheaders = True
 ## The sqlite file in which to store notebook signatures. By default, this will
 #  be in your Jupyter data directory. You can set it to ':memory:' to disable
 #  sqlite writing to the filesystem.
-#c.NotebookNotary.db_file = ''
+#c.NotebookNotary.db_file = u''
 
 ## The secret key with which notebooks are signed.
-#c.NotebookNotary.secret = b''
+#c.NotebookNotary.secret = ''
 
 ## The file where the secret key is stored.
-#c.NotebookNotary.secret_file = ''
+#c.NotebookNotary.secret_file = u''
 
 ## A callable returning the storage backend for notebook signatures. The default
 #  uses an SQLite database.
@@ -723,8 +602,23 @@ c.NotebookApp.trust_xheaders = True
 
 ## Whitelist of allowed kernel names.
 #
-#  By default, all installed kernels are allowed.
-#c.KernelSpecManager.whitelist = set()
+#  By default, all installed kernels ar# Configuration file for jupyter-notebook.
+
+# ------------------------------------------------
+# ------------------------------------------------
+# ------------------------------------------------
+
+# import os
+# from IPython.lib import passwd
+
+# #c.NotebookApp.ip = '*'
+# #c.NotebookApp.allow_origin = '*'
+# c.MultiKernelManager.default_kernel_name = 'python3'
+
+# # sets a password if PASSWORD is set in the environment
+# if 'PASSWORD' in os.environ:
+    # c.NotebookApp.password = passwd(os.environ['PASSWORD'])
+    # del os.environ['PASSWORD']
 
 import os
 c.NotebookApp.token = os.environ['JUPYTER_TOKEN']

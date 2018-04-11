@@ -1,7 +1,7 @@
 {
   "default": {
-    "extensions": [".py"],
-    "files": ["Dockerfile"]
+    "extensions": [".py", ".md"],
+    "files": ["Dockerfile", "docker-compose.yml"]
   },
   "docs": {
     "extensions": [".md"],
