@@ -14,6 +14,24 @@ Deepo is a great start but this goes a step further to add a turnkey development
 * There are no customization options for Deepo. It is based on the `all-` configuration of Deepo (i.e., `ufoym/deepo:all-py36-jupyter`)
 * Python 3 only
 
+## Dependencies
+
+* nvidia-docker
+* nvidia-docker-compose
+* A working CUDA 9.x installation
+
 ## Usage
 
+```
+$ git clone https://github.com/eriknomitch/deep-learning-docker.git
 
+$ cd deep-learning-docker
+
+# Create a secure token for Jupyter lab in .env
+$ echo "JUPYTER_TOKEN='<your-token>'" > .env
+
+# This will build the Docker image and start the nvidia-docker-compose services
+# fetching any that aren't already fetched.
+$ ./app
+
+```
