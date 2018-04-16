@@ -6,6 +6,10 @@ A full Docker Compose setup based on [Deepo](https://github.com/ufoym/deepo) wit
 
 Deepo is a great start but this goes a step further to add a turnkey development environment on top of the deep learning packages.
 
+## Status
+
+Pre-alpha
+
 ## Requirements
 
 `deep-learning-docker` is opinionated.
@@ -32,6 +36,6 @@ $ echo "JUPYTER_TOKEN='<your-token>'" > .env
 
 # This will build the Docker image and start the nvidia-docker-compose services
 # fetching any that aren't already fetched.
-$ ./app
+$ ./deep-learning-docker
 
 ```
