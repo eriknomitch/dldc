@@ -26,6 +26,8 @@ Pre-alpha
 
 ## Usage
 
+### Quick Start
+
 ```
 $ git clone https://github.com/eriknomitch/deep-learning-docker.git
 
@@ -39,3 +41,32 @@ $ echo "JUPYTER_TOKEN='<your-token>'" > .env
 $ ./deep-learning-docker
 
 ```
+
+After launching, the `nvidia-docker-compose` services will be running.
+
+You'll then have the following available:
+
+* **Jupyter Lab** at http://localhost:8888 (use your `JUPYTER_TOKEN` you set in `.env` to log in) with all of the Deepo packages:
+  * Tensorflow
+  * Pytorch
+  * Keras
+  * Theano
+  * Sonnet
+  * Lasagne
+  * MXNet
+  * CNTK
+  * Chainer
+  * Caffe
+  * Caffe2
+  * Torch
+* **Tensorboard** at http://localhost:6006
+
+### Volumes
+
+Docker volumes will have been created. Here's the list from local directory to the directory on the Docker container(s):
+  * `./shared` -> `/shared`
+  * `./notebooks` -> `/notebooks` (Jupyter Lab will be configured to use this directory as the default notebook directory.)
+
+### Relaunching
+
+Simply run `./deep-learning-docker` again to start the `nvidia-docker-compose` services. Your volumes will be preserved between launches.
