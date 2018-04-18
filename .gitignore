@@ -126,7 +126,11 @@ nvidia-docker-compose.yml
 
 run
 
-shared/
-!notebooks/.keep
-notebooks/
-!notebooks/.keep
+volumes/*
+!volumes/notebooks/
+volumes/notebooks/*
+!volumes/datasets/
+volumes/datasets/*
+!volumes/.keep
+!volumes/notebooks/.keep
+!volumes/datasets/.keep
