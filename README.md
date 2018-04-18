@@ -6,6 +6,9 @@ A full [Docker Compose](https://github.com/docker/compose) setup for deep learni
 
 Deepo is great but it's only one Docker image. This goes a step further to add a turnkey development environment using Docker Compose to create a full system.
 
+![DLDC Diagram](https://i.imgur.com/IdclXPt.png "DLDC Diagram")
+
+
 ## Requirements
 
 DLDC is opinionated.
