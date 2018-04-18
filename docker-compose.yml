@@ -54,6 +54,5 @@ services:
       - VIRTUAL_PORT=6006
     ports:
       - "6006:6006"
-
-    command: /usr/local/bin/tensorboard --logdir=/shared/tensorboard --reload_interval=1
+    command: /usr/local/bin/tensorboard --logdir=/shared/tensorboard --reload_interval=1 --port 6006
 
