@@ -126,11 +126,18 @@ nvidia-docker-compose.yml
 
 run
 
-volumes/*
-!volumes/notebooks/
-volumes/notebooks/*
-!volumes/datasets/
-volumes/datasets/*
-!volumes/.keep
-!volumes/notebooks/.keep
-!volumes/datasets/.keep
+# Shared
+shared/*
+
+!shared/notebooks/
+!shared/tensorflow/
+!shared/datasets/
+
+shared/notebooks/*
+shared/tensorflow/*
+shared/datasets/*
+
+!shared/.keep
+!shared/notebooks/.keep
+!shared/tensorflow/.keep
+!shared/datasets/.keep

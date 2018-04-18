@@ -5,13 +5,13 @@
 source .env
 
 if [ -z $EXTERNAL_HOST ] ; then
-  echo "fatal: EXTERNAL_HOST is not set."
-  exit 1
+  echo "warning: EXTERNAL_HOST is not set. Using default: localhost"
+  export EXTERNAL_HOST=localhost
+else
+  echo "Using host: $EXTERNAL_HOST"
 fi
 
 docker build --tag dldc .
-
-echo "Using host: $EXTERNAL_HOST"
 
 # ------------------------------------------------
 # ------------------------------------------------
@@ -37,11 +37,8 @@ if [[ $_command == "up" ]] ; then
 
   # Make sure we're down
   echo "Ensuring services are down..."
-  #nvidia-docker-compose down --remove-orphans > /dev/null 2>&1
   nvidia-docker-compose down --remove-orphans
 
-  echo "Ensuring external volumes..."
-  docker volume create --name=shared
 fi
 
 nvidia-docker-compose $_command $*

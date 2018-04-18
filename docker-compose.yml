@@ -34,11 +34,10 @@ services:
     image: dldc
     volumes:
       - ./shared:/shared
-      - ./notebooks:/notebooks
     environment:
+      - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
       - VIRTUAL_PORT=8888
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
-      - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
     ports:
       - "8888:8888"
     command: bash /root/run_jupyter.sh
@@ -50,19 +49,11 @@ services:
     image: dldc
     volumes:
       - ./shared:/shared
-      - ./notebooks:/notebooks
     environment:
       - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
       - VIRTUAL_PORT=6006
     ports:
       - "6006:6006"
 
-    command: /usr/local/bin/tensorboard --logdir=/shared --reload_interval=1
-
-# ------------------------------------------------
-# VOLUMES ----------------------------------------
-# ------------------------------------------------
-volumes:
-  shared:
-    external: true
+    command: /usr/local/bin/tensorboard --logdir=/shared/tensorboard --reload_interval=1
 
