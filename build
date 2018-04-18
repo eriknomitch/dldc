@@ -1,3 +1,0 @@
-#!/bin/zsh
-
-docker build --tag deep-learning .
