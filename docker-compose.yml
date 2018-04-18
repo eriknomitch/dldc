@@ -31,11 +31,10 @@ services:
   # JUPYTER --------------------------------------
   # ----------------------------------------------
   jupyter:
-    image: deep-learning
+    image: dldc
     volumes:
       - ./shared:/shared
       - ./notebooks:/notebooks
-      - .:/deep-learning
     environment:
       - VIRTUAL_PORT=8888
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
@@ -48,11 +47,10 @@ services:
   # TENSORBOARD ----------------------------------
   # ----------------------------------------------
   tensorboard:
-    image: deep-learning
+    image: dldc
     volumes:
       - ./shared:/shared
       - ./notebooks:/notebooks
-      - .:/deep-learning
     environment:
       - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
       - VIRTUAL_PORT=6006
