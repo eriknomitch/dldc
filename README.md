@@ -1,4 +1,4 @@
-# deep-learning-docker
+# DLDC (Deep Learning Docker Compose)
 
 A full Docker Compose setup based on [Deepo](https://github.com/ufoym/deepo) with container services for [Jupyter Lab](https://github.com/jupyterlab/jupyterlab), [Tensorboad](https://github.com/tensorflow/tensorboard), and [nginx-proxy](https://github.com/jwilder/nginx-proxy) to run it all.
 
@@ -12,16 +12,16 @@ Pre-alpha
 
 ## Requirements
 
-`deep-learning-docker` is opinionated.
+DLDC is opinionated.
 
-* An Nvidia GPU for computation is requied
-* There are no customization options for Deepo. It is based on the `all-` configuration of Deepo (i.e., `ufoym/deepo:all-py36-jupyter`)
-* Python 3 only
+* An Nvidia GPU is required
+* There are no customization options for Deepo. The DLDC Docker image is based on the `all-` configuration of Deepo (i.e., `ufoym/deepo:all-py36-jupyter`)
+* Supports Python 3 only
 
 ## Dependencies
 
-* nvidia-docker
-* nvidia-docker-compose
+* `nvidia-docker`
+* `nvidia-docker-compose`
 * A working CUDA 9.x installation
 
 ## Usage
@@ -29,16 +29,16 @@ Pre-alpha
 ### Quick Start
 
 ```
-$ git clone https://github.com/eriknomitch/deep-learning-docker.git
+$ git clone https://github.com/eriknomitch/dldc.git
 
-$ cd deep-learning-docker
+$ cd dldc
 
 # Create a secure token for Jupyter lab in .env
 $ echo "JUPYTER_TOKEN='<your-token>'" > .env
 
 # This will build the Docker image and start the nvidia-docker-compose services
 # fetching any that aren't already fetched.
-$ ./deep-learning-docker
+$ ./dldc
 
 ```
 
@@ -69,4 +69,4 @@ Docker volumes will have been created. Here's the list from local directory to t
 
 ### Relaunching
 
-Simply run `./deep-learning-docker` again to start the `nvidia-docker-compose` services. Your volumes will be preserved between launches.
+Simply run `./dldc` again to start the `nvidia-docker-compose` services. Your volumes will be preserved between launches.

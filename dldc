@@ -1,6 +1,6 @@
 #!/bin/bash
 # ================================================
-# ZSH->NCV->APP ==================================
+# ZSH->DLDC ======================================
 # ================================================
 source .env
 
@@ -9,7 +9,7 @@ if [ -z $EXTERNAL_HOST ] ; then
   exit 1
 fi
 
-./build
+docker build --tag dldc .
 
 echo "Using host: $EXTERNAL_HOST"
 

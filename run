@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-./deep-learning-docker $*
+./deep-learning-docker-compose $*
