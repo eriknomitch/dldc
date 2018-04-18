@@ -125,3 +125,8 @@ tags
 nvidia-docker-compose.yml
 
 run
+
+shared/
+!notebooks/.keep
+notebooks/
+!notebooks/.keep
