@@ -1,3 +1,6 @@
+# ================================================
+# DOCKERFILE =====================================
+# ================================================
 FROM ufoym/deepo:all-py36-jupyter
 
 # ------------------------------------------------
@@ -12,8 +15,11 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         jupyter serverextension enable --py jupyterlab && \
         mkdir -p /opt/app/data
 
-# Copy config and run script
+# Copy Jupyter config
 # ------------------------------------------------
 COPY ./docker/jupyter_notebook_config.py /root/.jupyter/
+
+# Copy run script
+# ------------------------------------------------
 COPY ./docker/run_jupyter.sh /root/
 
