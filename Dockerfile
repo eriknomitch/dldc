@@ -23,3 +23,14 @@ COPY ./docker/jupyter_notebook_config.py /root/.jupyter/
 # ------------------------------------------------
 COPY ./docker/run_jupyter.sh /root/
 
+# ------------------------------------------------
+# INSTALL-FROM-CONFIG ----------------------------
+# ------------------------------------------------
+COPY ./docker/install_from_config.py /root/
+
+ADD ./config/ /root/config
+
+RUN apt-get update
+
+RUN python /root/install_from_config.py
+

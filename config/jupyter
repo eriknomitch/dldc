@@ -1,0 +1,14 @@
+jupyter-js-widgets/extension
+notify/notify
+hide_input/main
+codefolding/main
+autoscroll/main
+scroll_down/main
+freeze/main
+toc2/main
+varInspector/main
+execute_time/ExecuteTime
+nb_lynt/nb_lynt
+scratchpad/main
+collapsible_headings/main
+hide_input_all/main
