@@ -8,7 +8,14 @@ FROM ufoym/deepo:all-py36-jupyter
 # ------------------------------------------------
 RUN apt-get update
 
-RUN apt-get install -y --no-install-recommends nodejs apt-utils
+RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
+      $APT_INSTALL curl
+
+# ------------------------------------------------
+# NODE -------------------------------------------
+# ------------------------------------------------
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y --no-install-recommends nodejs
 
 # ------------------------------------------------
 # PIP --------------------------------------------
