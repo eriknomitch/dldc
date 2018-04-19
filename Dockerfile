@@ -4,6 +4,12 @@
 FROM ufoym/deepo:all-py36-jupyter
 
 # ------------------------------------------------
+# PACKAGES ---------------------------------------
+# ------------------------------------------------
+RUN apt-get update
+RUN apt-get install -y nodejs apt-utils
+
+# ------------------------------------------------
 # JUPYTER-LAB ------------------------------------
 # ------------------------------------------------
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
@@ -29,8 +35,6 @@ COPY ./docker/run_jupyter.sh /root/
 COPY ./docker/install_from_config.py /root/
 
 ADD ./config/ /root/config
-
-RUN apt-get update
 
 RUN python /root/install_from_config.py
 
