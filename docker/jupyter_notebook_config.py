@@ -14,5 +14,5 @@ c.NotebookApp.trust_xheaders = True
 # ------------------------------------------------
 # JUPYTER-TOKEN-ENV ------------------------------
 # ------------------------------------------------
-if os.environ.has_key('HOME'):
+if not "JUPYTER_TOKEN" in os.environ:
   c.NotebookApp.token = os.environ['JUPYTER_TOKEN']

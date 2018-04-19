@@ -14,9 +14,7 @@ install_from_config("apt",
                     lambda name: f"apt-get install -y --no-install-recommends {name}")
 install_from_config("pip",
                     lambda name: f"pip --no-cache-dir install --upgrade {name}")
-install_from_config("jupyter",
-                    lambda name: f"jupyter nbextension install {name}")
-install_from_config("jupyter",
-                    lambda name: f"jupyter nbextension enable {name}")
+# install_from_config("jupyter",
+#                     lambda name: f"jupyter nbextension enable {name}")
 install_from_config("jupyterlab",
                     lambda name: f"jupyter labextension install {name}")
