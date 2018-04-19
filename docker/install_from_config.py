@@ -5,7 +5,8 @@ import os
 # ------------------------------------------------
 def install_from_config(config_filename, format_syscall_fn):
   for name in open(f"/root/config/{config_filename}").read().splitlines():
-    os.system(format_syscall_fn(name))
+    if name != "":
+        os.system(format_syscall_fn(name))
 
 # ================================================
 # MAIN ===========================================
