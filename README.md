@@ -1,6 +1,6 @@
 # DLDC (Deep Learning Docker Compose)
 
-A full [Docker Compose](https://github.com/docker/compose) setup for deep learning based on [Deepo](https://github.com/ufoym/deepo) with separate container services for [Jupyter Lab](https://github.com/jupyterlab/jupyterlab), [Tensorboad](https://github.com/tensorflow/tensorboard), and [nginx-proxy](https://github.com/jwilder/nginx-proxy) and persistent volumes.
+A full [Docker Compose](https://github.com/docker/compose) setup for deep learning based on [Deepo](https://github.com/ufoym/deepo) with separate container services for [JupyterLab](https://github.com/jupyterlab/jupyterlab), [Tensorboad](https://github.com/tensorflow/tensorboard), and [nginx-proxy](https://github.com/jwilder/nginx-proxy) and persistent volumes.
 
 ## Why?
 
@@ -60,7 +60,7 @@ After launching, the `nvidia-docker-compose` services will be running.
 
 You'll then have the following available:
 
-* **Jupyter Lab** at http://localhost:8888 (use your `JUPYTER_TOKEN` you set in `.env` to log in) with all of the Deepo packages:
+* **JupyterLab** at http://localhost:8888 (use your `JUPYTER_TOKEN` you set in `.env` to log in) with all of the Deepo packages:
   * Tensorflow
   * Pytorch
   * Keras
@@ -79,7 +79,7 @@ You'll then have the following available:
 
 Docker volumes will have been created. Here's the list from local directory to the directory on the Docker container(s):
   * `./shared` -> `/shared`
-  * `./notebooks` -> `/notebooks` (Jupyter Lab will be configured to use this directory as the default notebook directory.)
+  * `./notebooks` -> `/notebooks` (JupyterLab will be configured to use this directory as the default notebook directory.)
 
 ### Relaunching
 
