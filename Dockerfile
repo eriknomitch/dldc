@@ -9,7 +9,7 @@ FROM ufoym/deepo:all-py36-jupyter
 
 # Copy init scripts
 # ------------------------------------------------
-ADD ./docker/scripts/ /root/.scripts
+COPY ./docker/scripts/ /root/.scripts
 
 # ------------------------------------------------
 # APT --------------------------------------------
@@ -49,7 +49,7 @@ COPY ./docker/jupyter_notebook_config.py /root/.jupyter/
 # ------------------------------------------------
 # INSTALL-FROM-CONFIG ----------------------------
 # ------------------------------------------------
-ADD ./config/ /root/config
+COPY ./config/ /root/config
 
 RUN python /root/.scripts/install_from_config.py
 
