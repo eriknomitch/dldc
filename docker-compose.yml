@@ -30,18 +30,18 @@ services:
   # ----------------------------------------------
   # JUPYTER --------------------------------------
   # ----------------------------------------------
-  jupyter:
+  jupyterlab:
     image: dldc
     volumes:
       - ./shared:/shared
     environment:
-      - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
+      - VIRTUAL_HOST=jupyterlab.${EXTERNAL_HOST}
       - VIRTUAL_PORT=8888
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
     ports:
       - "8888:8888"
       - "8097:8097"
-    command: bash /root/run_jupyter.sh
+    command: bash /root/run_jupyter_lab.sh
 
   # ----------------------------------------------
   # TENSORBOARD ----------------------------------

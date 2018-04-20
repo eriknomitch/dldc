@@ -4,6 +4,14 @@
 FROM ufoym/deepo:all-py36-jupyter
 
 # ------------------------------------------------
+# ADD->SCRIPTS -----------------------------------
+# ------------------------------------------------
+
+# Copy init scripts
+# ------------------------------------------------
+ADD ./docker/scripts/ /root/.scripts
+
+# ------------------------------------------------
 # APT --------------------------------------------
 # ------------------------------------------------
 RUN apt-get update
@@ -38,16 +46,10 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 # ------------------------------------------------
 COPY ./docker/jupyter_notebook_config.py /root/.jupyter/
 
-# Copy run script
-# ------------------------------------------------
-COPY ./docker/run_jupyter.sh /root/
-
 # ------------------------------------------------
 # INSTALL-FROM-CONFIG ----------------------------
 # ------------------------------------------------
-COPY ./docker/install_from_config.py /root/
-
 ADD ./config/ /root/config
 
-RUN python /root/install_from_config.py
+RUN python /root/.scripts/install_from_config.py
 
