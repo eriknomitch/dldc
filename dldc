@@ -43,8 +43,8 @@ esac
 if [[ $_command == "up" ]] ; then
 
   if [ -z $EXTERNAL_HOST ] ; then
-    echo "warning: EXTERNAL_HOST is not set. Using default: localhost"
-    export EXTERNAL_HOST=localhost
+    echo "EXTERNAL_HOST is not set. Using system hostname '$HOST'"
+    export EXTERNAL_HOST=$HOST
   else
     echo "Using host: $EXTERNAL_HOST"
   fi
@@ -53,7 +53,7 @@ if [[ $_command == "up" ]] ; then
   echo "Ensuring services are down..."
   nvidia-docker-compose down --remove-orphans
 
-  # Build
+  # Always build
   docker build --tag dldc .
 fi
 
