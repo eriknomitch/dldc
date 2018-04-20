@@ -4,15 +4,6 @@
 # ================================================
 source .env
 
-if [ -z $EXTERNAL_HOST ] ; then
-  echo "warning: EXTERNAL_HOST is not set. Using default: localhost"
-  export EXTERNAL_HOST=localhost
-else
-  echo "Using host: $EXTERNAL_HOST"
-fi
-
-docker build --tag dldc .
-
 # ------------------------------------------------
 # ------------------------------------------------
 # ------------------------------------------------
@@ -27,17 +18,43 @@ case $1 in
   up)
     shift
     ;;
+  shell)
+    _container_id=`nvidia-docker ps -aqf "name=dldc_jupyter"`
+
+    if [[ -n $_container_id ]] ; then
+      echo "Opening shell on running container ${_container_id}..."
+      nvidia-docker exec -it $_container_id bash
+    else
+      echo "Opening shell on new container..."
+      nvidia-docker run -it dldc bash
+    fi
+
+    exit
+    ;;
   *)
     _command="$1"
     shift
     ;;
 esac
 
+# ------------------------------------------------
+# ------------------------------------------------
+# ------------------------------------------------
 if [[ $_command == "up" ]] ; then
+
+  if [ -z $EXTERNAL_HOST ] ; then
+    echo "warning: EXTERNAL_HOST is not set. Using default: localhost"
+    export EXTERNAL_HOST=localhost
+  else
+    echo "Using host: $EXTERNAL_HOST"
+  fi
 
   # Make sure we're down
   echo "Ensuring services are down..."
   nvidia-docker-compose down --remove-orphans
+
+  # Build
+  docker build --tag dldc .
 
 fi
 
