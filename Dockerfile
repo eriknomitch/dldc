@@ -4,6 +4,13 @@
 FROM ufoym/deepo:all-py36-jupyter
 
 # ------------------------------------------------
+# ENV --------------------------------------------
+# ------------------------------------------------
+
+# https://github.com/phusion/baseimage-docker/issues/319#issuecomment-272568689
+ENV DEBIAN_FRONTEND noninteractive
+
+# ------------------------------------------------
 # COPY->SCRIPTS ----------------------------------
 # ------------------------------------------------
 COPY ./docker/scripts/ /root/.scripts
@@ -14,8 +21,7 @@ COPY ./docker/scripts/ /root/.scripts
 
 # Update
 # ------------------------------------------------
-RUN export DEBIAN_FRONTEND=noninteractive ;\
-    apt-get update
+RUN apt-get update
 
 # Install
 # ------------------------------------------------
@@ -61,4 +67,10 @@ COPY ./docker/config/jupyter_notebook_config.py /root/.jupyter/
 COPY ./config/ /root/config
 
 RUN python /root/.scripts/install_from_config.py
+
+# ------------------------------------------------
+# ENV->RESET -------------------------------------
+# ------------------------------------------------
+ENV DEBIAN_FRONTEND teletype
+
 
