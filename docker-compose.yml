@@ -48,6 +48,7 @@ services:
   # ----------------------------------------------
   jupyter-lab:
     image: dldc
+    user: $UID
     volumes:
       - ./shared:/shared
     environment:
@@ -64,6 +65,7 @@ services:
   # ----------------------------------------------
   tensorboard:
     image: dldc
+    user: $UID
     volumes:
       - ./shared:/shared
     environment:
