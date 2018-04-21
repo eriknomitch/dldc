@@ -4,20 +4,25 @@
 FROM ufoym/deepo:all-py36-jupyter
 
 # ------------------------------------------------
-# ADD->SCRIPTS -----------------------------------
-# ------------------------------------------------
-
-# Copy init scripts
+# COPY->SCRIPTS ----------------------------------
 # ------------------------------------------------
 COPY ./docker/scripts/ /root/.scripts
 
 # ------------------------------------------------
 # APT --------------------------------------------
 # ------------------------------------------------
-RUN apt-get update
 
-RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
-      $APT_INSTALL curl
+# Update
+# ------------------------------------------------
+RUN export DEBIAN_FRONTEND=noninteractive ;\
+    apt-get update
+
+# Install
+# ------------------------------------------------
+RUN export APT_INSTALL="apt-get install -y --no-install-recommends" && \
+      $APT_INSTALL \
+        curl \
+        zsh
 
 # ------------------------------------------------
 # NODE -------------------------------------------
@@ -28,26 +33,30 @@ RUN apt-get install -y --no-install-recommends nodejs
 # ------------------------------------------------
 # PIP --------------------------------------------
 # ------------------------------------------------
-RUN pip install --upgrade pip
+
+# Upgrade
+# ------------------------------------------------
+# FIX: Should we stick to a specific version instead of upgrading blindly?
+RUN pip --no-cache-dir install --upgrade pip
+
+# Install packages
+# ------------------------------------------------
+RUN export PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
+    $PIP_INSTALL \
+        jupyterlab
 
 # ------------------------------------------------
 # JUPYTER-LAB ------------------------------------
 # ------------------------------------------------
-RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
-    PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
-    GIT_CLONE="git clone --depth 10" && \
-    $PIP_INSTALL \
-        jupyterlab \
-        && \
-        jupyter serverextension enable --py jupyterlab && \
-        mkdir -p /opt/app/data
-
-# Copy Jupyter config
-# ------------------------------------------------
-COPY ./docker/jupyter_notebook_config.py /root/.jupyter/
+RUN jupyter serverextension enable --py jupyterlab
 
 # ------------------------------------------------
-# INSTALL-FROM-CONFIG ----------------------------
+# CONFIG->IMAGE ----------------------------------
+# ------------------------------------------------
+COPY ./docker/config/jupyter_notebook_config.py /root/.jupyter/
+
+# ------------------------------------------------
+# CONFIG->INSTALLS -------------------------------
 # ------------------------------------------------
 COPY ./config/ /root/config
 
