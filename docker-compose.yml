@@ -28,20 +28,36 @@ services:
       driver: "none"
 
   # ----------------------------------------------
-  # JUPYTER --------------------------------------
+  # JUPYTER (NOTEBOOK) ---------------------------
   # ----------------------------------------------
-  jupyterlab:
+  # jupyter:
+  #   image: dldc
+  #   volumes:
+  #     - ./shared:/shared
+  #   environment:
+  #     - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
+  #     - VIRTUAL_PORT=8888
+  #     - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+  #   ports:
+  #     - "8888:8888"
+  #     - "8097:8097"
+  #   command: bash /root/.scripts/run_jupyter_notebook.sh
+
+  # ----------------------------------------------
+  # JUPYTER-LAB ----------------------------------
+  # ----------------------------------------------
+  jupyter-lab:
     image: dldc
     volumes:
       - ./shared:/shared
     environment:
-      - VIRTUAL_HOST=jupyterlab.${EXTERNAL_HOST}
-      - VIRTUAL_PORT=8888
+      - VIRTUAL_HOST=jupyter-lab.${EXTERNAL_HOST}
+      - VIRTUAL_PORT=8889
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
     ports:
-      - "8888:8888"
+      - "8889:8888"
       - "8097:8097"
-    command: bash /root/run_jupyter_lab.sh
+    command: bash /root/.scripts/run_jupyter_lab.sh
 
   # ----------------------------------------------
   # TENSORBOARD ----------------------------------
@@ -55,5 +71,5 @@ services:
       - VIRTUAL_PORT=6006
     ports:
       - "6006:6006"
-    command: /usr/local/bin/tensorboard --logdir=/shared/tensorboard --reload_interval=1 --port 6006
+    command: tensorboard --logdir=/shared/tensorboard --reload_interval=1 --port 6006
 
