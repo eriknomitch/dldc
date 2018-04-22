@@ -21,7 +21,7 @@ case $1 in
     shift
     ;;
   shell)
-    _container_id=`nvidia-docker ps -aqf "name=dldc_jupyter"`
+    _container_id=`nvidia-docker ps --quiet --filter "name=dldc_jupyter"`
 
     if [[ -n $_container_id ]] ; then
       echo "Opening shell on running container ${_container_id}..."

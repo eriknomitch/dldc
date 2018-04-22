@@ -13,7 +13,7 @@ Deepo is great but it's only one Docker image. This goes a step further to add a
 
 DLDC is semi-opinionated.
 
-* An Nvidia GPU is required
+* An Nvidia GPU is required (i.e., a CPU version isn't offered)
 * There are no customization options for Deepo. The DLDC Docker image is based on the `all-` configuration of Deepo (i.e., `ufoym/deepo:all-py36-jupyter`) so it includes everything.
 * Python 3 only
 * JupyterLab is used but classic Jupyter notebooks can be run easily from JupyterLab

@@ -59,7 +59,9 @@ RUN jupyter serverextension enable --py jupyterlab
 # ------------------------------------------------
 # CONFIG->IMAGE ----------------------------------
 # ------------------------------------------------
-COPY ./docker/config/jupyter_notebook_config.py /root/.jupyter/
+
+# Copy Jupyter/JupyterLab settings
+COPY ./docker/jupyter /root/.jupyter/
 
 # ------------------------------------------------
 # CONFIG->INSTALLS -------------------------------
