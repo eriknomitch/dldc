@@ -17,25 +17,18 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY ./docker/scripts/ /root/.scripts
 
 # ------------------------------------------------
-# APT --------------------------------------------
-# ------------------------------------------------
-
-# Update
-# ------------------------------------------------
-RUN apt-get update
-
-# Install
-# ------------------------------------------------
-RUN export APT_INSTALL="apt-get install -y --no-install-recommends" && \
-      $APT_INSTALL \
-        curl \
-        zsh
-
-# ------------------------------------------------
 # NODE -------------------------------------------
 # ------------------------------------------------
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y --no-install-recommends nodejs
+
+# ------------------------------------------------
+# APT --------------------------------------------
+# ------------------------------------------------
+RUN export APT_INSTALL="apt-get install -y --no-install-recommends" && \
+      apt-get update &&
+      $APT_INSTALL \
+        curl \
+        nodejs
 
 # ------------------------------------------------
 # PIP --------------------------------------------
