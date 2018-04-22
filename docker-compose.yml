@@ -28,31 +28,15 @@ services:
       driver: "none"
 
   # ----------------------------------------------
-  # JUPYTER (NOTEBOOK) ---------------------------
+  # JUPYTER (LAB) --------------------------------
   # ----------------------------------------------
-  # jupyter:
-  #   image: dldc
-  #   volumes:
-  #     - ./shared:/shared
-  #   environment:
-  #     - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
-  #     - VIRTUAL_PORT=8888
-  #     - JUPYTER_TOKEN=${JUPYTER_TOKEN}
-  #   ports:
-  #     - "8888:8888"
-  #     - "8097:8097"
-  #   command: bash /root/.scripts/run_jupyter_notebook.sh
-
-  # ----------------------------------------------
-  # JUPYTER-LAB ----------------------------------
-  # ----------------------------------------------
-  jupyter-lab:
+  jupyter:
     image: dldc
     # user: $UID
     volumes:
       - ./shared:/shared
     environment:
-      - VIRTUAL_HOST=jupyter-lab.${EXTERNAL_HOST}
+      - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
       - VIRTUAL_PORT=8888
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
     ports:
