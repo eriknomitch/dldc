@@ -66,7 +66,7 @@ COPY ./docker/jupyter /root/.jupyter/
 # ------------------------------------------------
 # CONFIG->INSTALLS -------------------------------
 # ------------------------------------------------
-COPY ./config/ /root/config
+COPY ./config-packages/ /root/.config-packages
 
 RUN python /root/.scripts/install_from_config.py
 
