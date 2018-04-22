@@ -7,6 +7,7 @@ FROM ufoym/deepo:all-py36-jupyter
 # ENV --------------------------------------------
 # ------------------------------------------------
 
+# Reset this at bottom of file.
 # https://github.com/phusion/baseimage-docker/issues/319#issuecomment-272568689
 ENV DEBIAN_FRONTEND noninteractive
 
