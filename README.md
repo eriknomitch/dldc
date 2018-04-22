@@ -11,11 +11,12 @@ Deepo is great but it's only one Docker image. This goes a step further to add a
 
 ## Requirements
 
-DLDC is opinionated.
+DLDC is semi-opinionated.
 
 * An Nvidia GPU is required
-* There are no customization options for Deepo. The DLDC Docker image is based on the `all-` configuration of Deepo (i.e., `ufoym/deepo:all-py36-jupyter`)
-* Supports Python 3 only
+* There are no customization options for Deepo. The DLDC Docker image is based on the `all-` configuration of Deepo (i.e., `ufoym/deepo:all-py36-jupyter`) so it includes everything.
+* Python 3 only
+* JupyterLab is used but classic Jupyter notebooks can be run easily from JupyterLab
 
 ## Dependencies
 
@@ -58,9 +59,7 @@ $ ./dldc
 
 After launching, the `nvidia-docker-compose` services will be running.
 
-You'll then have the following available:
-
-* **JupyterLab** at http://localhost:8888 (use your `JUPYTER_TOKEN` you set in `.env` to log in) with all of the Deepo packages:
+* **JupyterLab** at http://localhost:8888 or http://jupyter.<hostname>. Use your `JUPYTER_TOKEN` you set in `.env` to log in. All of the Deepo packages will be available plus whatever you add in `packages/`.
   * Tensorflow
   * Pytorch
   * Keras
@@ -73,14 +72,16 @@ You'll then have the following available:
   * Caffe
   * Caffe2
   * Torch
-* **Tensorboard** at http://localhost:6006
+* **Tensorboard** at http://tensorboard.<hostname> or http://localhost:6006
 
 ### Volumes
 
-Docker volumes will have been created. Here's the list from local directory to the directory on the Docker container(s):
-  * `./shared` -> `/shared`
-  * `./notebooks` -> `/notebooks` (JupyterLab will be configured to use this directory as the default notebook directory.)
+The local `./shared` directory will have been created and mounted on the containers at `/shared`.
+
+Your Jupyter notebooks will be set to `./shared/notebooks` locally and `/shared/notebooks` on the container.
 
 ### Relaunching
 
-Simply run `./dldc` again to start the `nvidia-docker-compose` services. Your volumes will be preserved between launches.
+Simply run `./dldc` again to start the `nvidia-docker-compose` services.
+
+All data in `./shared` will have been preserved between instances.
