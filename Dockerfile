@@ -17,17 +17,17 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY ./docker/scripts/ /root/.scripts
 
 # ------------------------------------------------
-# NODE -------------------------------------------
-# ------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-
-# ------------------------------------------------
 # APT --------------------------------------------
 # ------------------------------------------------
-RUN export APT_INSTALL="apt-get install -y --no-install-recommends" && \
-      apt-get update &&
-      $APT_INSTALL \
-        curl \
+RUN apt-get update && \
+      apt-get install -y --no-install-recommends \
+        curl
+
+# ------------------------------------------------
+# NODE -------------------------------------------
+# ------------------------------------------------
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+      apt-get install -y --no-install-recommends \
         nodejs
 
 # ------------------------------------------------
@@ -41,9 +41,10 @@ RUN pip --no-cache-dir install --upgrade pip
 
 # Install packages
 # ------------------------------------------------
-RUN export PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
+RUN PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL \
-        jupyterlab
+        jupyterlab \
+        mxnet-cu90 # This needs to be upgraded for graphviz
 
 # ------------------------------------------------
 # JUPYTER-LAB ------------------------------------
@@ -69,4 +70,7 @@ RUN python /root/.scripts/install_from_config.py
 # ------------------------------------------------
 ENV DEBIAN_FRONTEND teletype
 
-
+# ------------------------------------------------
+# WORKDIR ----------------------------------------
+# ------------------------------------------------
+WORKDIR /root

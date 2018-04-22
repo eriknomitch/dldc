@@ -1,6 +1,1 @@
-@jupyterlab/fasta-extension
-@jupyterlab/geojson-extension
-@jupyterlab/katex-extension
 @jupyterlab/plotly-extension
-@jupyterlab/vega2-extension
-@jupyterlab/latex
