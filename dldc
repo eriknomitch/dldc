@@ -25,7 +25,7 @@ case $1 in
 
     if [[ -n $_container_id ]] ; then
       echo "Opening shell on running container ${_container_id}..."
-      nvidia-docker exec -it $_container_id bash
+      nvidia-docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -ti $_container_id bash
     else
       echo "Opening shell on new container..."
       nvidia-docker run -it dldc bash
