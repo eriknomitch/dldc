@@ -6,7 +6,7 @@ import os
 c.NotebookApp.allow_origin = '*'
 c.NotebookApp.allow_root = True
 c.NotebookApp.ip = '*'
-c.NotebookApp.notebook_dir = '/shared/notebooks'
+c.NotebookApp.notebook_dir = '/shared'
 c.NotebookApp.open_browser = False
 c.NotebookApp.port = 8888
 c.NotebookApp.trust_xheaders = True

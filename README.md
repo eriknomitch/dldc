@@ -95,10 +95,11 @@ $ ./dldc shell
 
 The local `./shared` directory will have been created and mounted on the containers at `/shared`.
 
-Your Jupyter notebooks will be set to `./shared/notebooks` locally and `/shared/notebooks` on the container.
+The Jupyter notebooks root path is `./shared` locally and `/shared` on the container.
 
 ### Relaunching
 
 Simply run `./dldc` again to start the `nvidia-docker-compose` services.
 
 All data in `./shared` will have been preserved between instances.
+
