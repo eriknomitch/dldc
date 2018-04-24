@@ -44,6 +44,12 @@ esac
 # ------------------------------------------------
 if [[ $_command == "up" ]] ; then
 
+  # Always build in case there are new packages in config-packages, etc.
+  # If up-to-date, this will just use the cached build and continue.
+  docker build --tag dldc .
+
+  clear
+
   if [ -z $EXTERNAL_HOST ] ; then
     echo "EXTERNAL_HOST is not set. Using system hostname '$HOST'"
     export EXTERNAL_HOST=$HOST
@@ -55,9 +61,6 @@ if [[ $_command == "up" ]] ; then
   echo "Ensuring services are down..."
   nvidia-docker-compose down --remove-orphans
 
-  # Always build in case there are new packages in config-packages, etc.
-  # If up-to-date, this will just use the cached build and continue.
-  docker build --tag dldc .
 fi
 
 # Issue main compose command
