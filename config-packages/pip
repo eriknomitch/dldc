@@ -2,3 +2,4 @@ gensim
 visdom
 dominate
 jupyterlab_latex
+git+https://github.com/tensorlayer/tensorlayer.git

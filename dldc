@@ -46,7 +46,7 @@ if [[ $_command == "up" ]] ; then
 
   # Always build in case there are new packages in config-packages, etc.
   # If up-to-date, this will just use the cached build and continue.
-  docker build --tag dldc .
+  nvidia-docker build --tag dldc .
 
   clear
 
