@@ -3,3 +3,4 @@ visdom
 dominate
 jupyterlab_latex
 tensorlayer
+easydict
