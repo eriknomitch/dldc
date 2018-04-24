@@ -74,6 +74,23 @@ After launching, the `nvidia-docker-compose` services will be running.
   * Torch
 * **Tensorboard** at http://tensorboard.<hostname> or http://localhost:6006
 
+
+## Commands
+
+### Build and start the DLDC Docker services
+
+```Shell
+$ ./dldc
+```
+
+If the `dldc` image is already built and up-to-date (i.e., nothing has changed in your personal configuration) the build will use the cache version.
+
+### Open an shell to the running DLDC `jupyter` service
+
+```Shell
+$ ./dldc shell
+```
+
 ### Volumes
 
 The local `./shared` directory will have been created and mounted on the containers at `/shared`.
