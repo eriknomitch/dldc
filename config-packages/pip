@@ -4,3 +4,4 @@ dominate
 jupyterlab_latex
 tensorlayer
 easydict
+joblib
