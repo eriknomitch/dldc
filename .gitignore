@@ -147,7 +147,3 @@ shared/datasets/*
 # Docker
 # ------------------------------------------------
 nvidia-docker-compose.yml
-
-!docker/nvidia/
-docker/nvidia/*
-!docker/nvidia/.keep
