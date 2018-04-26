@@ -70,11 +70,13 @@ RUN python /root/.scripts/install_from_config.py
 # ------------------------------------------------
 RUN pip install --upgrade tensorflow-gpu
 
-ADD ./docker/nvidia/ /root/.nvidia
-
+# Downgrade cudnn
+# ------------------------------------------------
+# FIX: This is a hack for current issue with tensorflow-gpu
 RUN apt-get purge -y libcudnn7 libcudnn7-dev
 
-RUN dpkg -i /root/.nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
+RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
+      dpkg -i /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------
