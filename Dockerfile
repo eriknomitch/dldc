@@ -63,7 +63,12 @@ COPY ./docker/jupyter /root/.jupyter/
 # ------------------------------------------------
 COPY ./config-packages/ /root/.config-packages
 
-RUN python /root/.scripts/install_from_config.py
+# Run individually to preserve cache for each
+RUN python /root/.scripts/install_from_config.py apt
+RUN python /root/.scripts/install_from_config.py jupyter
+RUN python /root/.scripts/install_from_config.py jupyterlab
+RUN python /root/.scripts/install_from_config.py lua
+RUN python /root/.scripts/install_from_config.py pip
 
 # ------------------------------------------------
 # CUDA -------------------------------------------

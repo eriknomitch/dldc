@@ -65,7 +65,7 @@ def main():
         'pip': subsystem_pip
     }
 
-    options[args.subsystem]()
+    subsystems[args.subsystem]()
 
 if __name__ == "__main__":
     main()
