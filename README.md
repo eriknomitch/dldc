@@ -22,62 +22,68 @@ DLDC is semi-opinionated.
 
 * [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 * [nvidia-docker-compose](https://github.com/eywalker/nvidia-docker-compose)
-* [Nvidia Drivers](http://www.nvidia.com/Download/index.aspx)
-* [CUDA](https://developer.nvidia.com/cuda-downloads) (>= 9.1)
 
 ## Usage
 
 ### Quick Start
 
+
+#### Clone the repository
+
 ```Shell
-
-# Clone the repository
-#
 $ git clone https://github.com/eriknomitch/dldc.git
-
 $ cd dldc
+```
 
-# Create a secure token for Jupyter lab in .env
-# 
-$ echo "JUPYTER_TOKEN='<your-token>'" > .env
+#### Set a secure token for Jupyter lab
 
-# Create an external host for nginx-proxy
-#
-# This is the base host you'll use so you can use subdomains for each service (i.e., http://jupyter.<external-host>, http://tensorboard.<external-host>)
-# If you only plan to run this on localhost just use "localhost"
-#
-$ echo "EXTERNAL_HOST='<external-host>'" > .env
+```Shell
+$ echo "JUPYTER_TOKEN='<your-token>'" >> .env
+```
 
-# Start dldc
-#
-# This will build the Docker image and start the nvidia-docker-compose services
-# fetching any that aren't already fetched.
-#
+#### Optional: Set an external host
+
+This is the base host you'll use so you can use subdomains for each service (i.e., http://jupyter.<external-host>, http://tensorboard.<external-host>).
+
+If you only plan on using this locally you can skip this.
+
+```Shell
+$ echo "EXTERNAL_HOST='your-external-host.com'" >> .env
+```
+
+#### Start dldc
+
+This will build the Docker image and start the `nvidia-docker-compose` services fetching anything that isn't already fetched.
+
+```
 $ ./dldc
-
 ```
 
 After launching, the `nvidia-docker-compose` services will be running.
 
-* **JupyterLab** at http://localhost:8888 or http://jupyter.<hostname>. Use your `JUPYTER_TOKEN` you set in `.env` to log in. All of the Deepo packages will be available plus whatever you add in `packages/`.
-  * Tensorflow
-  * Pytorch
-  * Keras
-  * Theano
-  * Sonnet
-  * Lasagne
-  * MXNet
-  * CNTK
-  * Chainer
-  * Caffe
-  * Caffe2
-  * Torch
-* **Tensorboard** at http://tensorboard.<hostname> or http://localhost:6006
+* **JupyterLab** at http://localhost:8888 or http://jupyter.<host>. Use your `JUPYTER_TOKEN` you set in `.env` to log in.
+* **Tensorboard** at http://tensorboard.<host> or http://localhost:6006
 
+## Packages
+
+You may add various types of packages to the files in `packages/` to have DLDC build them into the Docker image.
+
+This is especially useful because of the ephemeral nature of Docker containers. Once added here, your package will be available to any `dldc` docker container you run.
+
+```
+packages/
+  apt          # Package names
+  jupyter      # Extension names
+  jupyterlab   # Extension names
+  lua          # Packae names
+  pip          # Package names
+```
+
+After adding, re-run `./dldc`.
 
 ## Commands
 
-### Build and start the DLDC Docker services
+### Start dldc
 
 ```Shell
 $ ./dldc
@@ -91,13 +97,13 @@ If the `dldc` image is already built and up-to-date (i.e., nothing has changed i
 $ ./dldc shell
 ```
 
-### Volumes
+## Volumes
 
 The local `./shared` directory will have been created and mounted on the containers at `/shared`.
 
 The Jupyter notebooks root path is `./shared` locally and `/shared` on the container.
 
-### Relaunching
+## Relaunching
 
 Simply run `./dldc` again to start the `nvidia-docker-compose` services.
 
