@@ -66,6 +66,17 @@ COPY ./config-packages/ /root/.config-packages
 RUN python /root/.scripts/install_from_config.py
 
 # ------------------------------------------------
+# CUDA -------------------------------------------
+# ------------------------------------------------
+RUN pip install --upgrade tensorflow-gpu
+
+ADD ./docker/nvidia/ /root/.nvidia
+
+RUN apt-get purge -y libcudnn7 libcudnn7-dev
+
+RUN dpkg -i /root/.nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
+
+# ------------------------------------------------
 # ENV->RESET -------------------------------------
 # ------------------------------------------------
 ENV DEBIAN_FRONTEND teletype

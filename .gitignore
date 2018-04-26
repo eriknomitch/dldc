@@ -122,11 +122,13 @@ tags
 
 # End of https://www.gitignore.io/api/vim,python,jupyternotebook
 
-nvidia-docker-compose.yml
 
+# Misc.
+# ------------------------------------------------
 run
 
 # Shared
+# ------------------------------------------------
 shared/*
 
 !shared/notebooks/
@@ -141,3 +143,11 @@ shared/datasets/*
 !shared/notebooks/.keep
 !shared/tensorflow/.keep
 !shared/datasets/.keep
+
+# Docker
+# ------------------------------------------------
+nvidia-docker-compose.yml
+
+!docker/nvidia/
+docker/nvidia/*
+!docker/nvidia/.keep
