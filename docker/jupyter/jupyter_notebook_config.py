@@ -12,7 +12,11 @@ c.NotebookApp.port = 8888
 c.NotebookApp.trust_xheaders = True
 
 # ------------------------------------------------
-# JUPYTER-TOKEN-ENV ------------------------------
+# AUTHENTICATION  --------------------------------
 # ------------------------------------------------
 if "JUPYTER_TOKEN" in os.environ:
   c.NotebookApp.token = os.environ['JUPYTER_TOKEN']
+
+if "JUPYTER_PASSWORD_HASH" in os.environ:
+    c = get_config()
+    c.NotebookApp.password = os.environ['JUPYTER_PASSWORD_HASH']
