@@ -64,19 +64,25 @@ After launching, the `nvidia-docker-compose` services will be running.
 * **JupyterLab** at http://localhost:8888 or http://jupyter.<host>. Use your `JUPYTER_TOKEN` you set in `.env` to log in.
 * **Tensorboard** at http://tensorboard.<host> or http://localhost:6006
 
-## Packages
+## Configuration
 
-You may add various types of packages to the files in `packages/` to have DLDC build them into the Docker image.
+
+### Packages
+
+You may add various types of packages to the files in `config/packages/` to have DLDC build them into the Docker image.
 
 This is especially useful because of the ephemeral nature of Docker containers. Once added here, your package will be available to any `dldc` docker container you run.
 
+**Important**: Only add the name of the package to the corresponding file (i.e., add a line with `cowsay` to `config/packages/apt` if you want to install the apt package for `cowsay`).
+
 ```
-packages/
-  apt          # Package names
-  jupyter      # Extension names
-  jupyterlab   # Extension names
-  lua          # Packae names
-  pip          # Package names
+config/
+  packages/
+    apt          # Package names
+    jupyter      # Extension names
+    jupyterlab   # Extension names
+    lua          # Packae names
+    pip          # Package names
 ```
 
 After adding, re-run `./dldc`.
