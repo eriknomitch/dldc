@@ -17,9 +17,25 @@ _command="up"
 case $1 in
   "")
     ;;
+  # Up (Default)
+  # ----------------------------------------------
   up)
     shift
     ;;
+
+  # Up Deatched
+  # ----------------------------------------------
+  up-detached)
+    tmux start-server
+    tmux new-session -d -s "dldc" -n "editor"
+    tmux send-keys -t "dldc:editor" C-z "cd $PWD; ofe" Enter
+    tmux new-window -t "dldc:2" -n "dldc"
+    tmux send-keys -t "dldc:dldc" C-z "cd $PWD; ./dldc" Enter
+    exit
+    ;;
+
+  # Shell
+  # ----------------------------------------------
   shell)
     _container_id=`nvidia-docker ps --quiet --filter "name=dldc_jupyter"`
 
@@ -33,6 +49,9 @@ case $1 in
 
     exit
     ;;
+
+  # Other
+  # ----------------------------------------------
   *)
     _command="$1"
     shift
