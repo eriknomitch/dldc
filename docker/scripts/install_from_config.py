@@ -19,7 +19,7 @@ import argparse
 # UTILITY ----------------------------------------
 # ------------------------------------------------
 def install_from_config(config_filename, format_syscall_fn):
-  for name in open(f"/root/.config-packages/{config_filename}").read().splitlines():
+  for name in open(f"/root/.config-image/packages/{config_filename}").read().splitlines():
     if name != "":
         os.system(format_syscall_fn(quote(name)))
 

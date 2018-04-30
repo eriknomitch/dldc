@@ -61,7 +61,7 @@ COPY ./docker/jupyter /root/.jupyter/
 # ------------------------------------------------
 # CONFIG->INSTALLS -------------------------------
 # ------------------------------------------------
-COPY ./config-packages/ /root/.config-packages
+COPY ./config/ /root/.config-image/
 
 # Run individually to preserve cache for each
 RUN python /root/.scripts/install_from_config.py apt
