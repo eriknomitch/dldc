@@ -19,9 +19,10 @@ import argparse
 # UTILITY ----------------------------------------
 # ------------------------------------------------
 def install_from_config(config_filename, format_syscall_fn):
-  for name in open(f"/root/.config-image/packages/{config_filename}").read().splitlines():
-    if name != "":
-        os.system(format_syscall_fn(quote(name)))
+  for line in open(f"/root/.config-image/packages/{config_filename}").read().splitlines():
+    # Omit empty lines and quoted lines
+    if line != "" and not line.starts_with("#"):
+        os.system(format_syscall_fn(quote(line)))
 
 # ------------------------------------------------
 # SUBSYSTEMS -------------------------------------
