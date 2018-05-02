@@ -39,6 +39,7 @@ services:
       - VIRTUAL_HOST=jupyter.${EXTERNAL_HOST}
       - VIRTUAL_PORT=8888
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+      - JUPYTER_PASSWORD_HASH=${JUPYTER_PASSWORD_HASH}
     ports:
       - "8888:8888"
       - "8097:8097"
