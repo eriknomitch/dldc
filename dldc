@@ -10,7 +10,7 @@ export UID
 # DETERMINE-COMMAND ------------------------------
 # ------------------------------------------------
 
-# Default to up, allow "" for up, handle "down", handle 
+# Default to up, allow "" for up, handle "down", handle
 # additional arguments to docker-compose <command> ...
 _command="up"
 
@@ -20,6 +20,7 @@ case $1 in
   # Up (Default)
   # ----------------------------------------------
   up)
+    # Default command is "up". Handle everything later.
     shift
     ;;
 
@@ -50,6 +51,16 @@ case $1 in
     exit
     ;;
 
+  # Is Running?
+  # ----------------------------------------------
+  is-running)
+    if [[ `nvidia-docker ps | awk '$2=="dldc" { print $1 }' | wc -l` -gt 0 ]] ; then
+      exit 0
+    else
+      exit 1
+    fi
+    ;;
+
   # Other
   # ----------------------------------------------
   *)
@@ -59,7 +70,7 @@ case $1 in
 esac
 
 # ------------------------------------------------
-# HANDLE-UP --------------------------------------
+# HANDLE->UP -------------------------------------
 # ------------------------------------------------
 if [[ $_command == "up" ]] ; then
 
