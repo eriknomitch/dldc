@@ -21,7 +21,7 @@ import argparse
 def install_from_config(config_filename, format_syscall_fn):
   for line in open(f"/root/.config-image/packages/{config_filename}").read().splitlines():
     # Omit empty lines and quoted lines
-    if line != "" and not line.starts_with("#"):
+    if line != "" and not line.startswith("#"):
         os.system(format_syscall_fn(quote(line)))
 
 # ------------------------------------------------
