@@ -7,6 +7,36 @@ source .env
 export UID
 
 # ------------------------------------------------
+# UTILITY ----------------------------------------
+# ------------------------------------------------
+function _dldc_is_running() {
+  if [[ `nvidia-docker ps | awk '$2=="dldc" { print $1 }' | wc -l` -gt 0 ]] ; then
+    return 0
+  fi
+  return 1
+}
+
+function _dldc_shell() {
+  _container_id=`nvidia-docker ps --quiet --filter "name=dldc_jupyter"`
+
+  if [[ -n $_container_id ]] ; then
+    echo "Opening shell on running container ${_container_id}..."
+    nvidia-docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -ti $_container_id bash
+  else
+    echo "Opening shell on new container..."
+    nvidia-docker run -it dldc bash
+  fi
+}
+
+function _dldc_up_tmux_detached() {
+    tmux start-server
+    tmux new-session -d -s "dldc" -n "editor"
+    tmux send-keys -t "dldc:editor" C-z "cd $PWD; ofe" Enter
+    tmux new-window -t "dldc:2" -n "dldc"
+    tmux send-keys -t "dldc:dldc" C-z "cd $PWD; ./dldc" Enter
+}
+
+# ------------------------------------------------
 # DETERMINE-COMMAND ------------------------------
 # ------------------------------------------------
 
@@ -15,50 +45,43 @@ export UID
 _command="up"
 
 case $1 in
+
+  # Default: Up or Shell
+  # ----------------------------------------------
   "")
+    if _dldc_is_running; then
+      _dldc_shell
+      exit
+    fi
+    # Otherwise, command will be "up"
     ;;
-  # Up (Default)
+
+  # Up
   # ----------------------------------------------
   up)
     # Default command is "up". Handle everything later.
     shift
     ;;
 
-  # Up Deatched
+  # Up (Tmux Deatched)
   # ----------------------------------------------
   up-detached)
-    tmux start-server
-    tmux new-session -d -s "dldc" -n "editor"
-    tmux send-keys -t "dldc:editor" C-z "cd $PWD; ofe" Enter
-    tmux new-window -t "dldc:2" -n "dldc"
-    tmux send-keys -t "dldc:dldc" C-z "cd $PWD; ./dldc" Enter
+    _dldc_up_tmux_detached
     exit
     ;;
 
   # Shell
   # ----------------------------------------------
   shell)
-    _container_id=`nvidia-docker ps --quiet --filter "name=dldc_jupyter"`
-
-    if [[ -n $_container_id ]] ; then
-      echo "Opening shell on running container ${_container_id}..."
-      nvidia-docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -ti $_container_id bash
-    else
-      echo "Opening shell on new container..."
-      nvidia-docker run -it dldc bash
-    fi
-
+    _dldc_shell
     exit
     ;;
 
   # Is Running?
   # ----------------------------------------------
   is-running)
-    if [[ `nvidia-docker ps | awk '$2=="dldc" { print $1 }' | wc -l` -gt 0 ]] ; then
-      exit 0
-    else
-      exit 1
-    fi
+    _dldc_is_running
+    exit
     ;;
 
   # Other
