@@ -1,2 +1,3 @@
 @jupyterlab/plotly-extension
+@jupyterlab/google-drive
 jupyterlab_vim
