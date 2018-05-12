@@ -10,6 +10,7 @@ c.NotebookApp.notebook_dir = '/shared'
 c.NotebookApp.open_browser = False
 c.NotebookApp.port = 8888
 c.NotebookApp.trust_xheaders = True
+c.NotebookApp.iopub_data_rate_limit = 1.0e10
 
 # ------------------------------------------------
 # AUTHENTICATION  --------------------------------
