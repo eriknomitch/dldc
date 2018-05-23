@@ -59,18 +59,6 @@ RUN jupyter serverextension enable --py jupyterlab
 COPY ./docker/jupyter /root/.jupyter/
 
 # ------------------------------------------------
-# CONFIG->INSTALLS -------------------------------
-# ------------------------------------------------
-COPY ./config/ /root/.config-image/
-
-# Run individually to preserve cache for each
-RUN python /root/.scripts/install_from_config.py apt
-RUN python /root/.scripts/install_from_config.py jupyter
-RUN python /root/.scripts/install_from_config.py jupyterlab
-RUN python /root/.scripts/install_from_config.py lua
-RUN python /root/.scripts/install_from_config.py pip
-
-# ------------------------------------------------
 # CUDA -------------------------------------------
 # ------------------------------------------------
 RUN pip install --upgrade tensorflow-gpu
@@ -86,6 +74,18 @@ RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ub
       curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
       dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
       rm -f /tmp/libcudnn7*.deb
+
+# ------------------------------------------------
+# CONFIG->INSTALLS -------------------------------
+# ------------------------------------------------
+COPY ./config/ /root/.config-image/
+
+# Run individually to preserve cache for each
+RUN python /root/.scripts/install_from_config.py apt
+RUN python /root/.scripts/install_from_config.py jupyter
+RUN python /root/.scripts/install_from_config.py jupyterlab
+RUN python /root/.scripts/install_from_config.py lua
+RUN python /root/.scripts/install_from_config.py pip
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------
