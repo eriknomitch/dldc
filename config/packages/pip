@@ -19,3 +19,5 @@ colour-science
 pypng
 livelossplot
 plotly
+u-msgpack-python
+thriftpy
