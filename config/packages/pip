@@ -21,3 +21,4 @@ livelossplot
 plotly
 u-msgpack-python
 thriftpy
+pympler
