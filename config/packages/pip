@@ -23,3 +23,5 @@ u-msgpack-python
 thriftpy
 pympler
 hurry.filesize
+PyYAML
+python-box
