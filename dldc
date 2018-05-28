@@ -32,9 +32,15 @@ function _dldc_up_tmux_detached() {
     tmux start-server
     tmux new-session -d -s "dldc" -n "editor"
     tmux send-keys -t "dldc:editor" C-z "cd $PWD; ofe" Enter
+
     tmux new-window -t "dldc:2" -n "dldc"
     tmux split-window -h -t "dldc:2"
-    tmux send-keys -t "dldc:dldc" C-z "cd $PWD; ./dldc" Enter
+    tmux send-keys -t "dldc:2" C-z "cd $PWD; ./dldc" Enter
+
+    tmux new-window -t "dldc:3" -n "dldc"
+    tmux send-keys -t "dldc:dldc" C-z "htop" Enter
+    tmux split-window -h -t "dldc:3"
+    tmux send-keys -t "dldc:3" C-z "watch-gpustat" Enter
 }
 
 # ------------------------------------------------
