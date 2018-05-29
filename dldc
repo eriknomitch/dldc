@@ -119,10 +119,10 @@ if [[ $_command == "up" ]] ; then
 
   # Make sure we're down
   echo "Ensuring services are down..."
-  nvidia-docker-compose down --remove-orphans
+  docker-compose down --remove-orphans
 
 fi
 
 # Issue main compose command
 # ------------------------------------------------
-nvidia-docker-compose $_command $*
+docker-compose $_command $*

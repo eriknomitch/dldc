@@ -20,13 +20,12 @@ DLDC is semi-opinionated.
 
 ## Dependencies
 
-* [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
-* [nvidia-docker-compose](https://github.com/eywalker/nvidia-docker-compose)
+* [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker)
+* [docker-compose](https://docs.docker.com/compose/) (`docker-compose` can now utilize GPUs with `nvidia-docker2`)
 
 ## Usage
 
 ### Quick Start
-
 
 #### Clone the repository
 
@@ -53,13 +52,13 @@ $ echo "EXTERNAL_HOST='your-external-host.com'" >> .env
 
 #### Start dldc
 
-This will build the Docker image and start the `nvidia-docker-compose` services fetching anything that isn't already fetched.
+This will build the Docker image and start the `docker-compose` services fetching anything that isn't already fetched.
 
 ```
 $ ./dldc
 ```
 
-After launching, the `nvidia-docker-compose` services will be running.
+After launching, the `docker-compose` services will be running.
 
 * **JupyterLab** at http://localhost:8888 or http://jupyter.<host>. Use your `JUPYTER_TOKEN` you set in `.env` to log in.
 * **Tensorboard** at http://tensorboard.<host> or http://localhost:6006
@@ -111,7 +110,7 @@ The Jupyter notebooks root path is `./shared` locally and `/shared` on the conta
 
 ## Relaunching
 
-Simply run `./dldc` again to start the `nvidia-docker-compose` services.
+Simply run `./dldc` again to start the `docker-compose` services.
 
 All data in `./shared` will have been preserved between instances.
 

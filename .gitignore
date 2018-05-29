@@ -144,7 +144,3 @@ shared/datasets/*
 !shared/notebooks/.keep
 !shared/tensorflow/.keep
 !shared/datasets/.keep
-
-# Docker
-# ------------------------------------------------
-nvidia-docker-compose.yml
