@@ -1,0 +1,13 @@
+# Core
+# ------------------------------------------------
+# These packages get installed on build (or updated if they exist in
+# the deepo docke image).
+#
+# NOTE: DO NOT ADD PACKAGES HERE
+# Add your own packages to config/packages/
+keras
+numpy
+sklearn
+pandas
+theano
+pandoc

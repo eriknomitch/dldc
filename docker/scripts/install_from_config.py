@@ -18,8 +18,10 @@ import argparse
 # ------------------------------------------------
 # UTILITY ----------------------------------------
 # ------------------------------------------------
-def install_from_config(config_filename, format_syscall_fn):
-  for line in open(f"/root/.config-image/packages/{config_filename}").read().splitlines():
+def install_from_config(config_filename, format_syscall_fn, user=False):
+  directory = "packages" if user else "packages-core"
+
+  for line in open(f"/root/.config-image/{directory}/{config_filename}").read().splitlines():
     # Omit empty lines and quoted lines
     if line != "" and not line.startswith("#"):
         os.system(format_syscall_fn(quote(line)))
@@ -27,24 +29,24 @@ def install_from_config(config_filename, format_syscall_fn):
 # ------------------------------------------------
 # SUBSYSTEMS -------------------------------------
 # ------------------------------------------------
-def subsystem_apt():
+def subsystem_apt(user):
     os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
 
     install_from_config("apt",
                         lambda name: f"apt-get install -y --no-install-recommends {name}")
 
-def subsystem_lua():
+def subsystem_lua(user):
     install_from_config("lua",
                         lambda name: f"luarocks install {name}")
 
-def subsystem_jupyter():
+def subsystem_jupyter(user):
     install_from_config("jupyter",
                         lambda name: f"jupyter nbextension enable {name}")
 
-def subsystem_jupyterlab():
+def subsystem_jupyterlab(user):
     install_from_config("jupyterlab",
                         lambda name: f"jupyter labextension install {name}")
-def subsystem_pip():
+def subsystem_pip(user):
     install_from_config("pip",
                         lambda name: f"pip --no-cache-dir install --upgrade {name}")
 
@@ -54,6 +56,7 @@ def subsystem_pip():
 def main():
     parser = argparse.ArgumentParser()
 
+    parser.add_argument('-U', '--user')
     parser.add_argument("subsystem")
 
     args = parser.parse_args()
@@ -66,7 +69,7 @@ def main():
         'pip': subsystem_pip
     }
 
-    subsystems[args.subsystem]()
+    subsystems[args.subsystem](args.user)
 
 if __name__ == "__main__":
     main()

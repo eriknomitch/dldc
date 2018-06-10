@@ -80,12 +80,25 @@ RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ub
 # ------------------------------------------------
 COPY ./config/ /root/.config-image/
 
+# Core (in dldc repo)
+# ------------------------------------------------
+
 # Run individually to preserve cache for each
 RUN python /root/.scripts/install_from_config.py apt
 RUN python /root/.scripts/install_from_config.py jupyter
 RUN python /root/.scripts/install_from_config.py jupyterlab
 RUN python /root/.scripts/install_from_config.py lua
 RUN python /root/.scripts/install_from_config.py pip
+
+# User (Ignored in dldc repo - user configured)
+# ------------------------------------------------
+
+# Run individually to preserve cache for each
+RUN python /root/.scripts/install_from_config.py --user apt
+RUN python /root/.scripts/install_from_config.py --user jupyter
+RUN python /root/.scripts/install_from_config.py --user jupyterlab
+RUN python /root/.scripts/install_from_config.py --user lua
+RUN python /root/.scripts/install_from_config.py --user pip
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------

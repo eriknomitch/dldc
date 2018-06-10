@@ -144,3 +144,6 @@ shared/datasets/*
 !shared/notebooks/.keep
 !shared/tensorflow/.keep
 !shared/datasets/.keep
+
+config/packages/*
+!config/packages/.keep
