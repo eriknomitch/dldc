@@ -19,11 +19,11 @@ import argparse
 # UTILITY ----------------------------------------
 # ------------------------------------------------
 def install_from_config(config_filename, format_syscall_fn, user=False):
-  directory = "packages" if user else "packages-core"
+  directory = 'packages' if user else 'packages-core'
 
-  for line in open(f"/root/.config-image/{directory}/{config_filename}").read().splitlines():
+  for line in open(f'/root/.config-image/{directory}/{config_filename}').read().splitlines():
     # Omit empty lines and quoted lines
-    if line != "" and not line.startswith("#"):
+    if line != '' and not line.startswith('#'):
         os.system(format_syscall_fn(quote(line)))
 
 # ------------------------------------------------
@@ -32,23 +32,23 @@ def install_from_config(config_filename, format_syscall_fn, user=False):
 def subsystem_apt(user):
     os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
 
-    install_from_config("apt",
-                        lambda name: f"apt-get install -y --no-install-recommends {name}")
+    install_from_config('apt',
+                        lambda name: f'apt-get install -y --no-install-recommends {name}')
 
 def subsystem_lua(user):
-    install_from_config("lua",
-                        lambda name: f"luarocks install {name}")
+    install_from_config('lua',
+                        lambda name: f'luarocks install {name}')
 
 def subsystem_jupyter(user):
-    install_from_config("jupyter",
-                        lambda name: f"jupyter nbextension enable {name}")
+    install_from_config('jupyter',
+                        lambda name: f'jupyter nbextension enable {name}')
 
 def subsystem_jupyterlab(user):
-    install_from_config("jupyterlab",
-                        lambda name: f"jupyter labextension install {name}")
+    install_from_config('jupyterlab',
+                        lambda name: f'jupyter labextension install {name}')
 def subsystem_pip(user):
-    install_from_config("pip",
-                        lambda name: f"pip --no-cache-dir install --upgrade {name}")
+    install_from_config('pip',
+                        lambda name: f'pip --no-cache-dir install --upgrade {name}')
 
 # ================================================
 # MAIN ===========================================
@@ -56,8 +56,8 @@ def subsystem_pip(user):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-U', '--user')
-    parser.add_argument("subsystem")
+    parser.add_argument('-U', '--user-defined', default=False)
+    parser.add_argument('subsystem')
 
     args = parser.parse_args()
 
@@ -71,5 +71,5 @@ def main():
 
     subsystems[args.subsystem](args.user)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

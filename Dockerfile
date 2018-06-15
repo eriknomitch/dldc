@@ -94,11 +94,11 @@ RUN python /root/.scripts/install_from_config.py pip
 # ------------------------------------------------
 
 # Run individually to preserve cache for each
-RUN python /root/.scripts/install_from_config.py --user apt
-RUN python /root/.scripts/install_from_config.py --user jupyter
-RUN python /root/.scripts/install_from_config.py --user jupyterlab
-RUN python /root/.scripts/install_from_config.py --user lua
-RUN python /root/.scripts/install_from_config.py --user pip
+RUN python /root/.scripts/install_from_config.py --user-defined apt
+RUN python /root/.scripts/install_from_config.py --user-defined jupyter
+RUN python /root/.scripts/install_from_config.py --user-defined jupyterlab
+RUN python /root/.scripts/install_from_config.py --user-defined lua
+RUN python /root/.scripts/install_from_config.py --user-defined pip
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------
