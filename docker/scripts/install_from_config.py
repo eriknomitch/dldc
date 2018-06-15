@@ -18,8 +18,8 @@ import argparse
 # ------------------------------------------------
 # UTILITY ----------------------------------------
 # ------------------------------------------------
-def install_from_config(config_filename, format_syscall_fn, user=False):
-  directory = 'packages' if user else 'packages-core'
+def install_from_config(config_filename, format_syscall_fn, user_defined=False):
+  directory = 'packages' if user_defined else 'packages-core'
 
   for line in open(f'/root/.config-image/{directory}/{config_filename}').read().splitlines():
     # Omit empty lines and quoted lines
@@ -29,24 +29,24 @@ def install_from_config(config_filename, format_syscall_fn, user=False):
 # ------------------------------------------------
 # SUBSYSTEMS -------------------------------------
 # ------------------------------------------------
-def subsystem_apt(user):
+def subsystem_apt(user_defined):
     os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
 
     install_from_config('apt',
                         lambda name: f'apt-get install -y --no-install-recommends {name}')
 
-def subsystem_lua(user):
+def subsystem_lua(user_defined):
     install_from_config('lua',
                         lambda name: f'luarocks install {name}')
 
-def subsystem_jupyter(user):
+def subsystem_jupyter(user_defined):
     install_from_config('jupyter',
                         lambda name: f'jupyter nbextension enable {name}')
 
-def subsystem_jupyterlab(user):
+def subsystem_jupyterlab(user_defined):
     install_from_config('jupyterlab',
                         lambda name: f'jupyter labextension install {name}')
-def subsystem_pip(user):
+def subsystem_pip(user_defined):
     install_from_config('pip',
                         lambda name: f'pip --no-cache-dir install --upgrade {name}')
 
@@ -69,7 +69,7 @@ def main():
         'pip': subsystem_pip
     }
 
-    subsystems[args.subsystem](args.user)
+    subsystems[args.subsystem](args.user_defined)
 
 if __name__ == '__main__':
     main()
