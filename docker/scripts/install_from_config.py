@@ -56,7 +56,7 @@ def subsystem_pip(user_defined):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-U', '--user-defined', default=False)
+    parser.add_argument('--user-defined', default=False)
     parser.add_argument('subsystem')
 
     args = parser.parse_args()
