@@ -84,21 +84,21 @@ COPY ./config/ /root/.config-image/
 # ------------------------------------------------
 
 # Run individually to preserve cache for each
-RUN python /root/.scripts/install_from_config.py apt
-RUN python /root/.scripts/install_from_config.py jupyter
-RUN python /root/.scripts/install_from_config.py jupyterlab
-RUN python /root/.scripts/install_from_config.py lua
-RUN python /root/.scripts/install_from_config.py pip
+RUN python /root/.scripts/install_from_config.py core apt
+RUN python /root/.scripts/install_from_config.py core jupyter
+RUN python /root/.scripts/install_from_config.py core jupyterlab
+RUN python /root/.scripts/install_from_config.py core lua
+RUN python /root/.scripts/install_from_config.py core pip
 
 # User (Ignored in dldc repo - user configured)
 # ------------------------------------------------
 
 # Run individually to preserve cache for each
-RUN python /root/.scripts/install_from_config.py --user-defined apt
-RUN python /root/.scripts/install_from_config.py --user-defined jupyter
-RUN python /root/.scripts/install_from_config.py --user-defined jupyterlab
-RUN python /root/.scripts/install_from_config.py --user-defined lua
-RUN python /root/.scripts/install_from_config.py --user-defined pip
+RUN python /root/.scripts/install_from_config.py user apt
+RUN python /root/.scripts/install_from_config.py user jupyter
+RUN python /root/.scripts/install_from_config.py user jupyterlab
+RUN python /root/.scripts/install_from_config.py user lua
+RUN python /root/.scripts/install_from_config.py user pip
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------

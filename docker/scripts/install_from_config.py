@@ -56,7 +56,7 @@ def subsystem_pip(user_defined):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--user-defined', default=False)
+    parser.add_argument('type')
     parser.add_argument('subsystem')
 
     args = parser.parse_args()
@@ -69,7 +69,7 @@ def main():
         'pip': subsystem_pip
     }
 
-    subsystems[args.subsystem](args.user_defined)
+    subsystems[args.subsystem](args.type == 'user')
 
 if __name__ == '__main__':
     main()
