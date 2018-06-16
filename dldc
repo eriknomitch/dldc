@@ -10,21 +10,21 @@ export UID
 # UTILITY ----------------------------------------
 # ------------------------------------------------
 function _dldc_is_running() {
-  if [[ `nvidia-docker ps | awk '$2=="dldc" { print $1 }' | wc -l` -gt 0 ]] ; then
+  if [[ `docker ps | awk '$2=="dldc" { print $1 }' | wc -l` -gt 0 ]] ; then
     return 0
   fi
   return 1
 }
 
 function _dldc_shell() {
-  _container_id=`nvidia-docker ps --quiet --filter "name=dldc_jupyter"`
+  _container_id=`docker ps --quiet --filter "name=dldc_jupyter"`
 
   if [[ -n $_container_id ]] ; then
     echo "Opening shell on running container ${_container_id}..."
-    nvidia-docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -ti $_container_id bash
+    docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -ti $_container_id bash
   else
     echo "Opening shell on new container..."
-    nvidia-docker run -it dldc bash
+    docker run -it dldc bash
   fi
 }
 
@@ -106,7 +106,7 @@ if [[ $_command == "up" ]] ; then
 
   # Always build in case there are new packages in config-packages, etc.
   # If up-to-date, this will just use the cached build and continue.
-  nvidia-docker build --tag dldc .
+  docker build --tag dldc .
 
   clear
 
