@@ -114,3 +114,4 @@ Simply run `./dldc` again to start the `docker-compose` services.
 
 All data in `./shared` will have been preserved between instances.
 
+[comment]: # sudo -i -u erik zsh  -c "cd ~/.repositories/dldc && ./dldc up-detached"
