@@ -100,6 +100,12 @@ RUN python /root/.scripts/install_from_config.py user jupyterlab
 RUN python /root/.scripts/install_from_config.py user lua
 RUN python /root/.scripts/install_from_config.py user pip
 
+# Download models
+# ------------------------------------------------
+# SEE: https://github.com/pytorch/text#installation
+RUN python -m spacy download en
+RUN python -m nltk.downloader perluniprops nonbreaking_prefixes
+
 # ------------------------------------------------
 # ENV->RESET -------------------------------------
 # ------------------------------------------------
