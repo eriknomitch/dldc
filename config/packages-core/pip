@@ -13,3 +13,11 @@ sklearn
 pandas
 theano
 pandoc
+torchtext
+toolz
+attrs
+jupyterlab_latex
+gensim
+visdom
+dominate
+tensorlayer
