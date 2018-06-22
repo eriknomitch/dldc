@@ -22,4 +22,4 @@ visdom
 dominate
 tensorlayer
 spacy
-ntlk
+nltk
