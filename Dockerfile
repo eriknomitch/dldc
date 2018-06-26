@@ -92,19 +92,23 @@ RUN python /root/.scripts/install_from_config.py core pip
 
 # User (Ignored in dldc repo - user configured)
 # ------------------------------------------------
+# NOTE: Except pip. That will be last for caching purposes. JupyterLab extensions are slow.
 
 # Run individually to preserve cache for each
 RUN python /root/.scripts/install_from_config.py user apt
 RUN python /root/.scripts/install_from_config.py user jupyter
 RUN python /root/.scripts/install_from_config.py user jupyterlab
 RUN python /root/.scripts/install_from_config.py user lua
-RUN python /root/.scripts/install_from_config.py user pip
 
 # Download models
 # ------------------------------------------------
 # SEE: https://github.com/pytorch/text#installation
 RUN python -m spacy download en
 RUN python -m nltk.downloader perluniprops nonbreaking_prefixes
+
+# User -> pip
+# ------------------------------------------------
+RUN python /root/.scripts/install_from_config.py user pip
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------
