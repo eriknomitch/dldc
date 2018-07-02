@@ -48,15 +48,15 @@ services:
   # ----------------------------------------------
   # TENSORBOARD ----------------------------------
   # ----------------------------------------------
-  # tensorboard:
-  #   image: dldc
-  #   # user: $UID
-  #   volumes:
-  #     - ./shared:/shared
-  #   environment:
-  #     - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
-  #     - VIRTUAL_PORT=6006
-  #   ports:
-  #     - "6006:6006"
-  #   command: tensorboard --logdir=/shared/tensorboard --reload_interval=1 --port 6006
+  tensorboard:
+    image: dldc
+    # user: $UID
+    volumes:
+      - ./shared:/shared
+    environment:
+      - VIRTUAL_HOST=tensorboard.${EXTERNAL_HOST}
+      - VIRTUAL_PORT=6006
+    ports:
+      - "6006:6006"
+    command: tensorboard --logdir=/shared/tensorboard --reload_interval=1 --port 6006 --host 0.0.0.0
 
