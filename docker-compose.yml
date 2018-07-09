@@ -59,4 +59,6 @@ services:
     ports:
       - "6006:6006"
     command: tensorboard --logdir=/shared/tensorboard --reload_interval=1 --port 6006 --host 0.0.0.0
+    logging:
+      driver: "none"
 
