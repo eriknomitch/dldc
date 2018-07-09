@@ -26,7 +26,7 @@ RUN apt-get update && \
 # ------------------------------------------------
 # NODE -------------------------------------------
 # ------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
       apt-get install -y --no-install-recommends \
         nodejs
 
