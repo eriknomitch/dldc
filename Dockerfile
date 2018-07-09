@@ -43,13 +43,8 @@ RUN pip --no-cache-dir install --upgrade pip
 # ------------------------------------------------
 RUN PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
     $PIP_INSTALL \
-        jupyterlab \
-        mxnet-cu90 # This needs to be upgraded for graphviz
-
-# ------------------------------------------------
-# JUPYTER-LAB ------------------------------------
-# ------------------------------------------------
-RUN jupyter serverextension enable --py jupyterlab
+        jupyterlab #\
+        #mxnet-cu90 # This needs to be upgraded for graphviz
 
 # ------------------------------------------------
 # CONFIG->IMAGE ----------------------------------

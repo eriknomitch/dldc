@@ -16,7 +16,7 @@ pandoc
 torchtext
 toolz
 attrs
-jupyterlab_latex
+#jupyterlab_latex
 gensim
 visdom
 dominate
