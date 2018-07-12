@@ -43,7 +43,7 @@ services:
     ports:
       - "8888:8888"
       - "8097:8097"
-    command: bash /root/.scripts/run_jupyter_lab.sh --watch
+    command: bash /root/.scripts/run_jupyter_lab.sh
 
   # ----------------------------------------------
   # TENSORBOARD ----------------------------------
