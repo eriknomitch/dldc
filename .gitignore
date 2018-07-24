@@ -130,6 +130,11 @@ scratch
 fix-permissions
 clear-tensorboard
 
+# Docker
+# ------------------------------------------------
+docker/nvidia/*
+!docker/nvidia/.keep
+
 # Shared
 # ------------------------------------------------
 shared/*
