@@ -64,12 +64,18 @@ RUN pip install --upgrade tensorflow-gpu
 # FIX: This is a hack for current issue with tensorflow-gpu
 RUN apt-get purge -y libcudnn7 libcudnn7-dev
 
-# Install libcudnn and libcudnn-dev
-RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
-      dpkg -i /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
-      curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
-      dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
-      rm -f /tmp/libcudnn7*.deb
+## Install libcudnn and libcudnn-dev
+# RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
+#       dpkg -i /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
+#       curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
+#       dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
+#       rm -f /tmp/libcudnn7*.deb
+
+COPY ./docker/nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb /tmp
+COPY ./docker/nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb /tmp
+
+RUN dpkg -i /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
+RUN dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb
 
 # ------------------------------------------------
 # CONFIG->INSTALLS -------------------------------
