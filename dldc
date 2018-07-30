@@ -38,7 +38,7 @@ function _dldc_up_tmux_detached() {
     tmux send-keys -t "dldc:2" C-z "cd $PWD; ./dldc" Enter
 
     tmux new-window -t "dldc:3" -n "dldc"
-    tmux send-keys -t "dldc:3" C-z "htop" Enter
+    tmux send-keys -t "dldc:3" C-z "sudo nice -n 19 htop" Enter
     tmux split-window -h -t "dldc:3"
     tmux send-keys -t "dldc:3" C-z "watch-gpustat" Enter
 }
