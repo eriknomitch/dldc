@@ -21,12 +21,20 @@ import argparse
 def install_from_config(config_filename, format_syscall_fn, user_defined=False):
     directory = "packages" if user_defined else "packages-core"
 
+    path = f"/root/.config-image/{directory}/{config_filename}"
+
+    if not os.path.isfile(path):
+        print("Not installing packages from '{path}' since it does not exist.")
+        return
+
     for line in (
-        open(f"/root/.config-image/{directory}/{config_filename}").read().splitlines()
+        open(path).read().splitlines()
     ):
         # Omit empty lines and quoted lines
         if line != "" and not line.startswith("#"):
             os.system(format_syscall_fn(quote(line)))
+
+    pass
 
 
 # ------------------------------------------------
