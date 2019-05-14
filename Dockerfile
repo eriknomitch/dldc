@@ -63,7 +63,7 @@ RUN pip install --upgrade tensorflow-gpu
 # Downgrade cudnn
 # ------------------------------------------------
 # FIX: This is a hack for current issue with tensorflow-gpu
-RUN apt-get purge -y libcudnn7 libcudnn7-dev
+# RUN apt-get purge -y libcudnn7 libcudnn7-dev
 
 ## Install libcudnn and libcudnn-dev
 # RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
@@ -72,13 +72,13 @@ RUN apt-get purge -y libcudnn7 libcudnn7-dev
 #       dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
 #       rm -f /tmp/libcudnn7*.deb
 
-RUN mkdir /nvidia
+# RUN mkdir /nvidia
 
-COPY ./docker/nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
-COPY ./docker/nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
+# COPY ./docker/nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
+# COPY ./docker/nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
 
-RUN dpkg -i /nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
-RUN dpkg -i /nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb
+# RUN dpkg -i /nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
+# RUN dpkg -i /nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb
 
 # ------------------------------------------------
 # MINICONDA --------------------------------------
@@ -126,8 +126,8 @@ RUN python /root/.scripts/install_from_config.py user lua
 # Download models
 # ------------------------------------------------
 # SEE: https://github.com/pytorch/text#installation
-RUN python -m spacy download en
-RUN python -m nltk.downloader perluniprops nonbreaking_prefixes
+# RUN python -m spacy download en
+# RUN python -m nltk.downloader perluniprops nonbreaking_prefixes
 
 # User -> pip
 # ------------------------------------------------
