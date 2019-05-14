@@ -4,4 +4,6 @@
 # Docker command so we need this.
 export NODE_OPTIONS=--max-old-space-size=4096
 
-jupyter lab "$@"
+pip install -U jupyter
+
+jupyter notebook --no-browser "$@"
