@@ -6,11 +6,11 @@ FROM ufoym/deepo:all-jupyter
 # ------------------------------------------------
 # ENV --------------------------------------------
 # ------------------------------------------------
+ENV LANG=C.UTF-8
 
 # Reset this at bottom of file.
 # https://github.com/phusion/baseimage-docker/issues/319#issuecomment-272568689
 ENV DEBIAN_FRONTEND noninteractive
-ENV LANG=C.UTF-8
 
 # ------------------------------------------------
 # COPY->SCRIPTS ----------------------------------
