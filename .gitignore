@@ -138,19 +138,7 @@ docker/nvidia/*
 # Shared
 # ------------------------------------------------
 shared/*
-
-!shared/notebooks/
-!shared/tensorflow/
-!shared/datasets/
-
-shared/notebooks/*
-shared/tensorflow/*
-shared/datasets/*
-
 !shared/.keep
-!shared/notebooks/.keep
-!shared/tensorflow/.keep
-!shared/datasets/.keep
 
 config/packages/*
 !config/packages/.keep
