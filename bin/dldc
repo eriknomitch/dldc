@@ -2,6 +2,11 @@
 # ================================================
 # ZSH->DLDC ======================================
 # ================================================
+_containing_path="$( cd "$(dirname "$0")" ; pwd -P )"
+
+# Make sure we're in the root dldc dir
+cd $_containing_path/..
+
 source .env
 
 export UID
@@ -125,5 +130,4 @@ fi
 
 # Issue main compose command
 # ------------------------------------------------
-echo $JUPYTER_PASSWORD_HASH
 docker-compose $_command $*
