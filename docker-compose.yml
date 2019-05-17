@@ -43,7 +43,7 @@ services:
     ports:
       - "8888:8888"
       - "8097:8097"
-    command: bash /root/.scripts/run_jupyter_lab.sh
+    command: /root/.scripts/run_jupyter_lab.sh
     shm_size: '36gb'
 
   # ----------------------------------------------

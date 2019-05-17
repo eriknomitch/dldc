@@ -125,4 +125,5 @@ fi
 
 # Issue main compose command
 # ------------------------------------------------
+echo $JUPYTER_PASSWORD_HASH
 docker-compose $_command $*
