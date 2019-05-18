@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+source activate dldc
 
 # JupyterLab apparently has issues from being called directly as the main
 # Docker command so we need this.
