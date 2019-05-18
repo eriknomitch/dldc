@@ -1,103 +1,71 @@
 # ================================================
 # DOCKERFILE =====================================
 # ================================================
-FROM ufoym/deepo:all-jupyter
+FROM nvidia/cuda:9.2-base-ubuntu16.04
 
 # ------------------------------------------------
 # ENV --------------------------------------------
 # ------------------------------------------------
-ENV LANG=C.UTF-8
+
+# See http://bugs.python.org/issue19846
+ENV LANG C.UTF-8
 
 # Reset this at bottom of file.
 # https://github.com/phusion/baseimage-docker/issues/319#issuecomment-272568689
 ENV DEBIAN_FRONTEND noninteractive
 
 # ------------------------------------------------
+# ------------------------------------------------
+# ------------------------------------------------
+LABEL com.nvidia.volumes.needed="nvidia_driver"
+
+RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+         build-essential \
+         cmake \
+         git \
+         curl \
+         vim \
+         ca-certificates \
+         python-qt4 \
+         libjpeg-dev \
+         zip \
+         unzip \
+         libpng-dev &&\
+     rm -rf /var/lib/apt/lists/*
+
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+ENV PYTHON_VERSION=3.6
+
+RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
+     chmod +x ~/miniconda.sh && \
+     ~/miniconda.sh -b -p /opt/conda && \
+     rm ~/miniconda.sh && \
+    /opt/conda/bin/conda install conda-build
+
+ENV PATH=$PATH:/opt/conda/bin/
+ENV USER dldc
+
+# Create Environment
+COPY environment.yaml /environment.yaml
+RUN conda env create -f environment.yaml
+
+WORKDIR /notebooks
+
+# Activate Source
+CMD source activate dldc
+CMD source ~/.bashrc
+
+RUN chmod -R a+w /notebooks
+WORKDIR /notebooks
+
+COPY config.yml /root/.fastai/config.yml
+
+# ------------------------------------------------
 # COPY->SCRIPTS ----------------------------------
 # ------------------------------------------------
 COPY ./docker/scripts/ /root/.scripts
-
-# ------------------------------------------------
-# APT --------------------------------------------
-# ------------------------------------------------
-RUN apt-get update && \
-      apt-get install -y --no-install-recommends \
-        curl \
-        g++
-
-# ------------------------------------------------
-# NODE -------------------------------------------
-# ------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
-      apt-get install -y --no-install-recommends \
-        nodejs
-
-# ------------------------------------------------
-# PIP --------------------------------------------
-# ------------------------------------------------
-
-# Upgrade
-# ------------------------------------------------
-# FIX: Should we stick to a specific version instead of upgrading blindly?
-RUN pip --no-cache-dir install --upgrade pip
-
-# Install packages
-# ------------------------------------------------
-RUN PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
-    $PIP_INSTALL \
-      notebook \
-      jupyterlab
-      #mxnet-cu90 # This needs to be upgraded for graphviz
-
-# ------------------------------------------------
-# CONFIG->IMAGE ----------------------------------
-# ------------------------------------------------
-
-# Copy Jupyter/JupyterLab settings
-COPY ./docker/jupyter /root/.jupyter/
-
-# ------------------------------------------------
-# CUDA -------------------------------------------
-# ------------------------------------------------
-# RUN pip install --upgrade tensorflow-gpu
-
-# Downgrade cudnn
-# ------------------------------------------------
-# FIX: This is a hack for current issue with tensorflow-gpu
-# RUN apt-get purge -y libcudnn7 libcudnn7-dev
-
-## Install libcudnn and libcudnn-dev
-# RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
-#       dpkg -i /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
-#       curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
-#       dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
-#       rm -f /tmp/libcudnn7*.deb
-
-# RUN mkdir /nvidia
-
-# COPY ./docker/nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
-# COPY ./docker/nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
-
-# RUN dpkg -i /nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
-# RUN dpkg -i /nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb
-
-# ------------------------------------------------
-# MINICONDA --------------------------------------
-# ------------------------------------------------
-# FROM: https://hub.docker.com/r/conda/miniconda3/~/dockerfile/
-# RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
-#       && curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh \
-#       && bash /tmp/miniconda.sh -bfp /usr/local \
-#       && rm -rf /tmp/miniconda.sh \
-#       && conda install -y python=3 \
-#       && conda update conda \
-#       && apt-get -qq -y remove curl bzip2 \
-#       && apt-get -qq -y autoremove \
-#       && apt-get autoclean \
-#       && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log \
-#       && conda clean --all --yes
-
-# ENV PATH /opt/conda/bin:$PATH
 
 # ------------------------------------------------
 # CONFIG->INSTALLS -------------------------------
@@ -124,15 +92,16 @@ RUN python /root/.scripts/install_from_config.py user jupyter
 RUN python /root/.scripts/install_from_config.py user jupyterlab
 RUN python /root/.scripts/install_from_config.py user lua
 
-# Download models
-# ------------------------------------------------
-# SEE: https://github.com/pytorch/text#installation
-# RUN python -m spacy download en
-# RUN python -m nltk.downloader perluniprops nonbreaking_prefixes
-
 # User -> pip
 # ------------------------------------------------
 RUN python /root/.scripts/install_from_config.py user pip
+
+# ------------------------------------------------
+# CONFIG->IMAGE ----------------------------------
+# ------------------------------------------------
+
+# Copy Jupyter/JupyterLab settings
+COPY ./docker/jupyter /root/.jupyter/
 
 # ------------------------------------------------
 # ENV->RESET -------------------------------------
@@ -140,6 +109,88 @@ RUN python /root/.scripts/install_from_config.py user pip
 ENV DEBIAN_FRONTEND teletype
 
 # ------------------------------------------------
-# WORKDIR ----------------------------------------
 # ------------------------------------------------
-WORKDIR /root
+# ------------------------------------------------
+# CMD ["/root/.scripts/run_jupyter_lab.sh"]
+
+# # ------------------------------------------------
+# # APT --------------------------------------------
+# # ------------------------------------------------
+# RUN apt-get update && \
+#       apt-get install -y --no-install-recommends \
+#         curl \
+#         g++
+
+# # ------------------------------------------------
+# # NODE -------------------------------------------
+# # ------------------------------------------------
+# RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
+#       apt-get install -y --no-install-recommends \
+#         nodejs
+
+# # ------------------------------------------------
+# # PIP --------------------------------------------
+# # ------------------------------------------------
+
+# # Upgrade
+# # ------------------------------------------------
+# # FIX: Should we stick to a specific version instead of upgrading blindly?
+# RUN pip --no-cache-dir install --upgrade pip
+
+# # Install packages
+# # ------------------------------------------------
+# RUN PIP_INSTALL="pip --no-cache-dir install --upgrade" && \
+#     $PIP_INSTALL \
+#       notebook \
+#       jupyterlab
+#       #mxnet-cu90 # This needs to be upgraded for graphviz
+
+# # ------------------------------------------------
+# # CUDA -------------------------------------------
+# # ------------------------------------------------
+# # RUN pip install --upgrade tensorflow-gpu
+
+# # Downgrade cudnn
+# # ------------------------------------------------
+# # FIX: This is a hack for current issue with tensorflow-gpu
+# # RUN apt-get purge -y libcudnn7 libcudnn7-dev
+
+# ## Install libcudnn and libcudnn-dev
+# # RUN curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
+# #       dpkg -i /tmp/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb && \
+# #       curl "http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb" > /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
+# #       dpkg -i /tmp/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb && \
+# #       rm -f /tmp/libcudnn7*.deb
+
+# # RUN mkdir /nvidia
+
+# # COPY ./docker/nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
+# # COPY ./docker/nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb /nvidia
+
+# # RUN dpkg -i /nvidia/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb
+# # RUN dpkg -i /nvidia/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb
+
+# # ------------------------------------------------
+# # MINICONDA --------------------------------------
+# # ------------------------------------------------
+# # FROM: https://hub.docker.com/r/conda/miniconda3/~/dockerfile/
+# # RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
+# #       && curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh \
+# #       && bash /tmp/miniconda.sh -bfp /usr/local \
+# #       && rm -rf /tmp/miniconda.sh \
+# #       && conda install -y python=3 \
+# #       && conda update conda \
+# #       && apt-get -qq -y remove curl bzip2 \
+# #       && apt-get -qq -y autoremove \
+# #       && apt-get autoclean \
+# #       && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log \
+# #       && conda clean --all --yes
+
+# # ENV PATH /opt/conda/bin:$PATH
+
+# # Download models
+# # ------------------------------------------------
+# # SEE: https://github.com/pytorch/text#installation
+# # RUN python -m spacy download en
+# # RUN python -m nltk.downloader perluniprops nonbreaking_prefixes
+
