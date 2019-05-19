@@ -12,6 +12,7 @@ dependencies:
   - fastai
   - jupyter
   - jupyterlab
+  - cudatoolkit=10.0
   - pip:
       - nvidia-ml-py3
       - dataclasses
