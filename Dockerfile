@@ -19,6 +19,11 @@ ENV DEBIAN_FRONTEND noninteractive
 # ------------------------------------------------
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+ENV PATH=$PATH:/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV CUDA_PATH=/usr/local/cuda
+ENV PYTHON_VERSION=3.6
+
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list
 
 # NOTE: cuda-nvcc-<version>
@@ -35,9 +40,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
          unzip \
          libpng-dev &&\
      rm -rf /var/lib/apt/lists/*
-
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
-ENV PYTHON_VERSION=3.6
 
 RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
      chmod +x ~/miniconda.sh && \
@@ -109,5 +111,3 @@ COPY ./docker/jupyter /root/.jupyter/
 # ------------------------------------------------
 ENV DEBIAN_FRONTEND teletype
 
-# ENV LD_LIBRARY_PATH=$LD_LIBRARYPATH:/usr/local/cuda/lib64
-# ENV CUDA_PATH=/usr/local/cuda
